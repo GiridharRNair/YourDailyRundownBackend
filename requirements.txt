@@ -1,7 +1,8 @@
 flask==2.3.2
-newsapi-python
 requests~=2.31.0
 apscheduler~=3.10.1
 resend~=0.5.2
 nltk~=3.8.1
 python-dotenv~=1.0.0
+newsapi-python
+google-generativeai

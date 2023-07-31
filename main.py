@@ -52,8 +52,7 @@ def add_user():
         """, (first_name, last_name, email, categories))
 
         conn.commit()
-
-    return jsonify({"message": "User added successfully"}), 201
+    return jsonify({"message": "User added successfully"}).headers.add('Access-Control-Allow-Origin', '*'), 201
 
 
 @app.route('/registered_users', methods=['GET'])
@@ -106,6 +105,7 @@ def email_subscribers():
 
 if __name__ == "__main__":
     create_table()
+    # email_subscribers()
 
     scheduler = BackgroundScheduler()
     scheduler.add_job(email_subscribers, 'cron', hour=8)

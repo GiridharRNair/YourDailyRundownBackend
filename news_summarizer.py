@@ -1,13 +1,20 @@
 import os
-import json
-import requests
 import nltk
+import google.generativeai as palm
 from newsapi import NewsApiClient
 from newsplease import NewsPlease
 from dotenv import load_dotenv
 
 load_dotenv()
 nltk.download('punkt')
+palm.configure(api_key=os.getenv('AI_API_KEY'))
+defaults = {
+    'model': 'models/chat-bison-001',
+    'temperature': 0.25,
+    'candidate_count': 1,
+    'top_k': 40,
+    'top_p': 0.95,
+}
 
 
 class NewsSummarizer:
@@ -25,7 +32,7 @@ class NewsSummarizer:
             while len(self.categories_dict[category]) != self.article_count and count < len(top_headlines['articles']):
                 try:
                     article = NewsPlease.from_url(top_headlines['articles'][count]['url'])
-                    if article.maintext and \
+                    if article.maintext is not None and \
                             'This copy is for your personal, non-commercial use only.' not in article.maintext:
                         self.categories_dict[category].append(article.maintext)
                 except Exception as e:
@@ -35,15 +42,17 @@ class NewsSummarizer:
 
     def summarize_categories(self):
         for category in self.categories:
-            main_text_combined = tokenize_and_cut('.'.join(self.categories_dict[category]))
-            payload = {
-                "providers": "openai",
-                "language": 'en',
-                "text": 'summarize all the information in a paragraph, give me a rundown '
-                        'of this information:' + main_text_combined}
-            response = requests.post("https://api.edenai.run/v2/text/summarize", json=payload, headers=self.headers)
-            print(response.text)
-            self.categories_dict[category] = json.loads(response.text)['openai']['result']
+            prompt = "Grammatically summarize this information into a concise paragraph: " + \
+                     tokenize_and_cut('.'.join(self.categories_dict[category]))
+            print(prompt)
+            response = palm.chat(
+                **defaults,
+                context="",
+                examples=[],
+                messages=["NEXT REQUEST"]
+            )
+            self.categories_dict[category] = response.last
+            print(response.last)
 
     def get_summarized_news(self):
         self.get_top_headlines_for_categories()

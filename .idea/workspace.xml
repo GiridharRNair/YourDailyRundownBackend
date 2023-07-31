@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="requirements.txt update" />
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="CircleCI tests override">
+      <change afterPath="$PROJECT_DIR$/circle.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1690736146280</updated>
-      <workItem from="1690736147449" duration="31599000" />
+      <workItem from="1690736147449" duration="31916000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -68,7 +71,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690789255159</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="CircleCI tests override">
+      <created>1690789890456</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1690789890456</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -77,7 +87,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="requirements.txt update" />
-    <option name="LAST_COMMIT_MESSAGE" value="requirements.txt update" />
+    <MESSAGE value="CircleCI tests override" />
+    <option name="LAST_COMMIT_MESSAGE" value="CircleCI tests override" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NewsWebScraper$test.coverage" NAME="test Coverage Results" MODIFIED="1690757927636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

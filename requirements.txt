@@ -4,5 +4,5 @@ apscheduler~=3.10.1
 resend~=0.5.2
 nltk~=3.8.1
 python-dotenv~=1.0.0
-newsapi-python
-google-generativeai
+newsapi-python~=0.2.7
+google-generativeai~=0.1.0

@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])  # Allow cross-origin requests (for development)
+CORS(app)  # Allow cross-origin requests (for development)
 DB_NAME = "users.db"
 resend.api_key = os.getenv('RESEND_API_KEY')
 
@@ -52,7 +52,7 @@ def add_user():
         """, (first_name, last_name, email, categories))
 
         conn.commit()
-    return jsonify({"message": "User added successfully"}).headers.add('Access-Control-Allow-Origin', '*'), 201
+    return jsonify({"message": "User added successfully"}), 201
 
 
 @app.route('/registered_users', methods=['GET'])

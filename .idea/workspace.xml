@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="PaLM API use">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="PaLM API use, email improvement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/news_summarizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/news_summarizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +57,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1690736146280</updated>
-      <workItem from="1690736147449" duration="51334000" />
+      <workItem from="1690736147449" duration="58726000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -103,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690832649380</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="PaLM API use, email improvement">
+      <created>1690924503093</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1690924503093</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,11 +130,12 @@
     <MESSAGE value="requirements.txt update" />
     <MESSAGE value="CircleCI tests override" />
     <MESSAGE value="PaLM API use" />
-    <option name="LAST_COMMIT_MESSAGE" value="PaLM API use" />
+    <MESSAGE value="PaLM API use, email improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="PaLM API use, email improvement" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NewsWebScraper$test.coverage" NAME="test Coverage Results" MODIFIED="1690757927636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$news_summarizer.coverage" NAME="news_summarizer Coverage Results" MODIFIED="1690874332420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/NewsWebScraper$main.coverage" NAME="main Coverage Results" MODIFIED="1690923308508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NewsWebScraper$main.coverage" NAME="main Coverage Results" MODIFIED="1691005706940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

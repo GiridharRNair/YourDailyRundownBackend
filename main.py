@@ -37,19 +37,20 @@ def add_user():
     last_name = data.get("lastName")
     email = data.get("email")
     categories = ','.join(item['value'] for item in data.get("category"))
-
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
-        if cursor.fetchone():
-            cursor.execute("""
-            DELETE FROM users
-            WHERE email = ?;
-            """, (email,))
         cursor.execute("""
-            INSERT INTO users (first_name, last_name, email, category)
+            INSERT OR IGNORE INTO users (email, first_name, last_name, category)
             VALUES (?, ?, ?, ?)
-        """, (first_name, last_name, email, categories))
+        """, (email, first_name, last_name, categories))
+
+        cursor.execute("""
+            UPDATE users
+            SET category = ?,
+                first_name = ?,
+                last_name = ?
+            WHERE email = ?
+        """, (categories, first_name, last_name, email))
 
         conn.commit()
     return jsonify({"message": "User added successfully"}), 201
@@ -92,8 +93,9 @@ def email_subscribers():
         categories_list = categories.split(',')
         email_body = f"<h1>Hey {first_name} {last_name}, here is YourDailyRundown!</h1>"
         for category in categories_list:
-            email_body += f"<h2>{category.capitalize()}</h2>\n\n"
-            email_body += f"<p>{email_content[category.lower()]}</p>"
+            email_body += f'<img src="{email_content[category.lower()][1]}>\n' \
+                          f"<h2>{category.capitalize()}</h2>\n\n" \
+                          f"<p>{email_content[category.lower()][0]}</p>"
         email_body += f"<a href='http://127.0.0.1:5000/{email}/unsubscribe'>Want to unsubscribe?</a>"
         resend.Emails.send({
             "from": "onboarding@resend.dev",
@@ -107,14 +109,14 @@ if __name__ == "__main__":
     create_table()
     # email_subscribers()
 
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(email_subscribers, 'cron', hour=8)
-    scheduler.start()
-
-    try:
-        # Keep the main thread alive while the scheduler runs in the background
-        while True:
-            pass
-    except KeyboardInterrupt:
-        # Shutdown the scheduler gracefully if the user interrupts with Ctrl+C
-        scheduler.shutdown()
+    # scheduler = BackgroundScheduler()
+    # scheduler.add_job(email_subscribers, 'cron', hour=8)
+    # scheduler.start()
+    #
+    # try:
+    #     # Keep the main thread alive while the scheduler runs in the background
+    #     while True:
+    #         pass
+    # except KeyboardInterrupt:
+    #     # Shutdown the scheduler gracefully if the user interrupts with Ctrl+C
+    #     scheduler.shutdown()

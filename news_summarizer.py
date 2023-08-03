@@ -2,7 +2,6 @@ import os
 import nltk
 import requests
 import google.generativeai as palm
-from newsapi import NewsApiClient
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,8 +26,6 @@ defaults = {
 
 class NewsSummarizer:
     def __init__(self):
-        self.newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))
-        self.headers = {"Authorization": f"Bearer {os.getenv('AI_API_KEY')}"}
         self.categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
         self.categories_dict = {category: "" for category in self.categories}
         self.article_count = 10

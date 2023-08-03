@@ -1,11 +1,7 @@
 import os
-import nltk
-import requests
 import google.generativeai as palm
-from dotenv import load_dotenv
+import requests
 
-load_dotenv()
-nltk.download('punkt')
 palm.configure(api_key=os.getenv('AI_API_KEY'))
 news_api_key = os.getenv('NEWS_API_KEY')
 defaults = {

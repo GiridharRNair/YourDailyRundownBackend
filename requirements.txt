@@ -5,6 +5,7 @@ APScheduler==3.10.1
 async-timeout==4.0.2
 attrs==23.1.0
 Automat==22.10.0
+blinker==1.6.2
 boto3==1.28.15
 botocore==1.31.15
 cchardet==2.1.7
@@ -80,3 +81,4 @@ starkbank-ecdsa==2.2.0
 tinysegmenter==0.3
 tqdm==4.65.0
 Twisted==22.10.0
+tzlocal==5.0.1

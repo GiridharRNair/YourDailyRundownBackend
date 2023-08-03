@@ -4,9 +4,20 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="2">
+          <list size="13">
             <item index="0" class="java.lang.String" itemvalue="newsapi" />
             <item index="1" class="java.lang.String" itemvalue="google" />
+            <item index="2" class="java.lang.String" itemvalue="rsa" />
+            <item index="3" class="java.lang.String" itemvalue="regex" />
+            <item index="4" class="java.lang.String" itemvalue="tzlocal" />
+            <item index="5" class="java.lang.String" itemvalue="sgmllib3k" />
+            <item index="6" class="java.lang.String" itemvalue="typing_extensions" />
+            <item index="7" class="java.lang.String" itemvalue="zope.interface" />
+            <item index="8" class="java.lang.String" itemvalue="yarl" />
+            <item index="9" class="java.lang.String" itemvalue="tldextract" />
+            <item index="10" class="java.lang.String" itemvalue="w3lib" />
+            <item index="11" class="java.lang.String" itemvalue="zope.event" />
+            <item index="12" class="java.lang.String" itemvalue="warcio" />
           </list>
         </value>
       </option>

@@ -1,8 +1,6 @@
 flask==2.3.2
 requests~=2.31.0
 apscheduler~=3.10.1
-resend~=0.5.2
 nltk~=3.8.1
 python-dotenv~=1.0.0
-newsapi-python~=0.2.7
-google-generativeai~=0.1.0
+sendgrid~=6.10.0

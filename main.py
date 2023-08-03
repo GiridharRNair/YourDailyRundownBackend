@@ -3,15 +3,16 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
 from news_summarizer import NewsSummarizer
-import resend
 import os
 from dotenv import load_dotenv
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 load_dotenv()
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests (for development)
 DB_NAME = "users.db"
-resend.api_key = os.getenv('RESEND_API_KEY')
+sg = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
 
 
 def create_table():
@@ -53,6 +54,32 @@ def add_user():
         """, (categories, first_name, last_name, email))
 
         conn.commit()
+
+        greeting_email = Mail(
+            from_email='yourdailyrundown@gmail.com',
+            to_emails=email,
+            subject='Your Daily Rundown',
+            html_content=(
+                f"<p>Hey {first_name} {last_name},</p>\n\n"
+                f"<h2>Thanks for joining YourDailyRundown</h2>\n\n"
+                f"<p>Welcome to our newsletter! We're thrilled to have you on board.</p>\n\n"
+                f"<p>With our newsletter, you'll stay informed about the latest news and updates, all carefully "
+                f"curated and summarized to match your interests.</p>\n\n"
+                f"<p>Want to personalize your experience even further? You can easily update your preferences and "
+                f"name by re-registering for our newsletter. Don't worry about duplicate emails – we've got that "
+                f"covered, and all your changes will be recorded seamlessly.</p>\n\n"
+                f"<p>If, at any point, you wish to stop receiving our updates, you can simply click the <a "
+                f"href='http://127.0.0.1:8000/{email}/unsubscribe'>unsubscribe</a> link provided at the bottom of "
+                f"each email.</p>\n\n"
+                f"<p>Best regards,<br />Giridhar Nair<br />YourDailyRundown</p>"
+            )
+        )
+
+        try:
+            response = sg.send(greeting_email)
+            print(f"Email sent to {email}, status code: {response.status_code}")
+        except Exception as e:
+            print(f"Failed to send email to {email}. Error: {str(e)}")
     return jsonify({"message": "User added successfully"}), 201
 
 
@@ -93,21 +120,28 @@ def email_subscribers():
         categories_list = categories.split(',')
         email_body = f"<h1>Hey {first_name} {last_name}, here is YourDailyRundown!</h1>"
         for category in categories_list:
-            email_body += f'<img src="{email_content[category.lower()][1]}>\n' \
-                          f"<h2>{category.capitalize()}</h2>\n\n" \
-                          f"<p>{email_content[category.lower()][0]}</p>"
-        email_body += f"<a href='http://127.0.0.1:5000/{email}/unsubscribe'>Want to unsubscribe?</a>"
-        resend.Emails.send({
-            "from": "onboarding@resend.dev",
-            "to": email,
-            "subject": "Your Daily Rundown",
-            "html": email_body
-        })
+            email_body += f"<h2>{category.capitalize()}</h2>\n\n"
+            email_body += f"<p>{email_content[category.lower()]}</p>"
+        email_body += f"<a href='http://127.0.0.1:8000/{email}/unsubscribe'>Want to unsubscribe?</a>"
+
+        # Create a SendGrid email message
+        news_letter = Mail(
+            from_email='yourdailyrundown@gmail.com',
+            to_emails=email,
+            subject='Your Daily Rundown',
+            html_content=email_body
+        )
+
+        try:
+            response = sg.send(news_letter)
+            print(f"Email sent to {email}, status code: {response.status_code}")
+        except Exception as e:
+            print(f"Failed to send email to {email}. Error: {str(e)}")
 
 
 if __name__ == "__main__":
     create_table()
-    # email_subscribers()
+    email_subscribers()
 
     # scheduler = BackgroundScheduler()
     # scheduler.add_job(email_subscribers, 'cron', hour=8)

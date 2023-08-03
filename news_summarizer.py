@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 nltk.download('punkt')
 palm.configure(api_key=os.getenv('AI_API_KEY'))
+news_api_key = os.getenv('NEWS_API_KEY')
 defaults = {
     'model': 'models/text-bison-001',
     'temperature': 0.6,
@@ -32,7 +33,7 @@ class NewsSummarizer:
 
     def get_top_headlines_for_categories(self):
         for category in self.categories:
-            response = requests.get(f'https://newsdata.io/api/1/news?apikey=pub_27026ec23efbe2d283e41d31d32df03bb0a4f&q'
+            response = requests.get(f'https://newsdata.io/api/1/news?apikey={news_api_key}&q'
                                     f'={category}&country=us&language=en').json()
             self.categories_dict[category] = summarize_article(response["results"][0]["content"])
 

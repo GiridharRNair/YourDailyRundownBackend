@@ -1,18 +1,17 @@
-from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
-from news_summarizer import NewsSummarizer
 import os
 from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-load_dotenv()
+project_folder = os.path.expanduser('/home/GiridharNair/mysite')  # adjust as appropriate
+load_dotenv(os.path.join(project_folder, '.env'))
+
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests (for development)
-DB_NAME = "users.db"
-sg = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
+DB_NAME = "/home/GiridharNair/mysite/users.db"
 
 
 def create_table():
@@ -36,7 +35,7 @@ def add_user():
     data = request.json
     first_name = data.get("firstName")
     last_name = data.get("lastName")
-    email = data.get("email")
+    email = data.get("email").lower()
     categories = ','.join(item['value'] for item in data.get("category"))
     with sqlite3.connect(DB_NAME) as conn:
         try:
@@ -58,7 +57,7 @@ def get_users():
     rows = cursor.fetchall()
     cursor.close()
     conn.close()
-    return jsonify(rows)
+    return rows
 
 
 @app.route('/<email>/unsubscribe')
@@ -68,38 +67,11 @@ def unsubscribe(email):
     cursor.execute("""
     DELETE FROM users
     WHERE email = ?;
-    """, (email,))
+    """, (email.lower(),))
     conn.commit()
     cursor.close()
     conn.close()
     return f"Email {email} is removed from the mailing list."
-
-
-def email_subscribers():
-    subscribers = get_users()
-    email_content = NewsSummarizer().get_summarized_news()
-
-    for subscriber in subscribers:
-        user_id, first_name, last_name, email, categories = subscriber
-        categories_list = categories.split(',')
-        email_body = f"<h1>Hey {first_name} {last_name}, here is YourDailyRundown!</h1>"
-        for category in categories_list:
-            email_body += f"<h2>{category.capitalize()}</h2>\n\n"
-            email_body += f"<p>{email_content[category.lower()]}</p>"
-        email_body += f"<a href='http://127.0.0.1:8000/{email}/unsubscribe'>Want to unsubscribe?</a>"
-
-        news_letter = Mail(
-            from_email='yourdailyrundown@gmail.com',
-            to_emails=email,
-            subject='Your Daily Rundown',
-            html_content=email_body
-        )
-
-        try:
-            response = sg.send(news_letter)
-            print(f"Email sent to {email}, status code: {response.status_code}")
-        except Exception as e:
-            print(f"Failed to send email to {email}. Error: {str(e)}")
 
 
 def send_email_with_sendgrid(email, first_name, last_name):
@@ -118,12 +90,12 @@ def send_email_with_sendgrid(email, first_name, last_name):
                 f"name by re-registering for our newsletter. Don't worry about duplicate emails – we've got that "
                 f"covered, and all your changes will be recorded seamlessly.</p>\n\n"
                 f"<p>If, at any point, you wish to stop receiving our updates, you can simply click the <a "
-                f"href='http://127.0.0.1:8000/{email}/unsubscribe'>unsubscribe</a> link provided at the bottom of "
+                f"href='https://giridharnair.pythonanywhere.com/{email}/unsubscribe'>unsubscribe</a> link provided at the bottom of "
                 f"each email.</p>\n\n"
                 f"<p>Best regards,<br />Giridhar Nair<br />YourDailyRundown</p>"
             )
         )
-        response = sg.send(greeting_email)
+        response = SendGridAPIClient(os.getenv('SENDGRID_API_KEY')).send(greeting_email)
         print(f"Email sent to {email}, status code: {response.status_code}")
     except Exception as e:
         print(f"Failed to send email to {email}. Error: {str(e)}")
@@ -154,12 +126,4 @@ def add_user_to_database(conn, email, first_name, last_name, categories):
 if __name__ == "__main__":
     create_table()
 
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(email_subscribers, 'cron', hour=8)
-    scheduler.start()
-
-    try:
-        while True:
-            pass
-    except KeyboardInterrupt:
-        scheduler.shutdown()
+    app.run()  # Start the Flask application

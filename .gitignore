@@ -1,1 +1,5 @@
 .env
+
+/news_summarizer_test.py
+
+/main_test.py

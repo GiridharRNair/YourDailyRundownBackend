@@ -2,6 +2,8 @@
 
 The backend of YourDailyRundown is built using Python and Flask, a lightweight web framework. It interacts with a SQLite database to store user information and preferences. The backend is responsible for handling user registration, storing user data, summarizing news articles using AI, and sending personalized newsletters to subscribers via email.
 
+[Frontend Repo](https://github.com/GiridharRNair/YourDailyRundown)
+
 ## Code Structure
 
 The backend code consists of two main files:

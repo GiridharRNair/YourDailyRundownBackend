@@ -11,6 +11,7 @@ load_dotenv(os.path.join(project_folder, '.env'))
 
 palm.configure(api_key=os.getenv('AI_API_KEY'))
 news_api_key = os.getenv('NEWS_API_KEY')
+extract_content_key = os.getenv('EXTRACT_CONTENT_API_KEY')
 defaults = {
     'model': 'models/text-bison-001',
     'temperature': 0.6,
@@ -38,11 +39,24 @@ class NewsSummarizer:
         for category in self.categories:
             response = requests.get(f'https://newsdata.io/api/1/news?apikey={news_api_key}&q'
                                     f'={category}&country=us&language=en').json()
-            for article in range(len(response["results"])):
-                if response["results"][article]["description"]:
-                    self.categories_dict[category].append(response["results"][article]["description"])
-            news_descriptions = summarize_article(".".join(self.categories_dict[category]))
-            self.categories_dict[category] = news_descriptions.replace("**", "")
+
+            valid_articles_count = 0  # To keep track of valid articles for the current category
+            article_index = 0  # To keep track of the current article index
+
+            while valid_articles_count < 3 and article_index < len(response["results"]):
+                if response["results"][article_index]["link"]:
+                    article_content = requests.get(f'https://api.worldnewsapi.com/extract-news?url='
+                                                   f'{response["results"][article_index]["link"]}&analyze'
+                                                   f'=false&api-key={extract_content_key}').json()
+
+                    if article_content.get("text"):  # Check if the article content is valid
+                        title = response["results"][article_index]["title"]
+                        print(article_content["text"])
+                        summarized_content = summarize_article(article_content["text"])
+                        self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
+                        valid_articles_count += 1
+
+                article_index += 1
 
     def get_summarized_news(self):
         self.get_top_headlines_for_categories()
@@ -69,11 +83,15 @@ def email_subscribers():
     for subscriber in subscribers:
         user_id, first_name, last_name, email, categories = subscriber
         categories_list = categories.split(',')
+        print(categories_list)
         email_body = f"<p>Hey {first_name} {last_name}, here is YourDailyRundown!</p>"
         for category in categories_list:
             email_body += f"<h2>{category.capitalize()}</h2>\n\n"
-            email_body += f"<p>{email_content[category.lower()]}</p>"
-        email_body += f"<a href='http://127.0.0.1:8000/{email}/unsubscribe'>Want to unsubscribe?</a>"
+            for article in email_content[category.lower()]:
+                title, summarized_content = article.split("<br/><br/>")
+                email_body += f"<p><strong>{title}</strong></p>\n\n"
+                email_body += f"{summarized_content}<br/><br/>"
+        email_body += f"<a href='https://giridharnair.pythonanywhere.com/{email}/unsubscribe'>Want to unsubscribe?</a>"
 
         news_letter = Mail(
             from_email='yourdailyrundown@gmail.com',

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import sqlite3
 import os
@@ -9,7 +9,7 @@ from sendgrid.helpers.mail import Mail
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')  # adjust as appropriate
 load_dotenv(os.path.join(project_folder, '.env'))
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="/home/GiridharNair/mysite/templates")
 CORS(app)  # Allow cross-origin requests (for development)
 DB_NAME = "/home/GiridharNair/mysite/users.db"
 
@@ -40,7 +40,7 @@ def add_user():
     with sqlite3.connect(DB_NAME) as conn:
         try:
             add_user_to_database(conn, email, first_name, last_name, categories)
-            send_email_with_sendgrid(email, first_name, last_name)
+            send_greeting_email(email, first_name, last_name, categories)
         except Exception as e:
             return jsonify({"error": e}), 500
     return jsonify({"message": "User added successfully"}), 201
@@ -64,33 +64,52 @@ def get_users():
 def unsubscribe(email):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
+
     cursor.execute("""
-    DELETE FROM users
+    SELECT first_name, last_name
+    FROM users
     WHERE email = ?;
     """, (email.lower(),))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return f"Email {email} is removed from the mailing list."
+
+    result = cursor.fetchone()
+    if result:
+        first_name, last_name = result
+
+        cursor.execute("""
+        DELETE FROM users
+        WHERE email = ?;
+        """, (email.lower(),))
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return render_template('unsubscribe_page.html', first_name=first_name, last_name=last_name)
+    else:
+        cursor.close()
+        conn.close()
+        return render_template('user_not_found_page.html')
 
 
-def send_email_with_sendgrid(email, first_name, last_name):
+def send_greeting_email(email, first_name, last_name, categories):
     try:
+        categories_str = ', '.join(categories) if categories else 'general news'
         greeting_email = Mail(
             from_email='yourdailyrundown@gmail.com',
             to_emails=email,
-            subject='Your Daily Rundown',
+            subject='Your Daily Rundown - Welcome!',
             html_content=(
                 f"<p>Hey {first_name} {last_name},</p>\n\n"
                 f"<h2>Thanks for joining YourDailyRundown</h2>\n\n"
                 f"<p>Welcome to our newsletter! We're thrilled to have you on board.</p>\n\n"
                 f"<p>With our newsletter, you'll stay informed about the latest news and updates, all carefully "
-                f"curated and summarized to match your interests.</p>\n\n"
+                f"curated and summarized to match your interests in {categories_str}.</p>\n\n"
                 f"<p>Want to personalize your experience even further? You can easily update your preferences and "
                 f"name by re-registering for our newsletter. Don't worry about duplicate emails – we've got that "
                 f"covered, and all your changes will be recorded seamlessly.</p>\n\n"
                 f"<p>If, at any point, you wish to stop receiving our updates, you can simply click the <a "
-                f"href='https://giridharnair.pythonanywhere.com/{email}/unsubscribe'>unsubscribe</a> link provided at the bottom of "
+                f"href='https://giridharnair.pythonanywhere.com/{email}/unsubscribe'>unsubscribe</a> link provided at "
+                f"the bottom of"
                 f"each email.</p>\n\n"
                 f"<p>Best regards,<br />Giridhar Nair<br />YourDailyRundown</p>"
             )

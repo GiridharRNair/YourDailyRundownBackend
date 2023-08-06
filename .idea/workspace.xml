@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Link to frontend">
-      <change afterPath="$PROJECT_DIR$/templates/unsubscribe_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unsubscribe.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_not_found_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Improve welcome letter &amp; unsubscribe page">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +69,7 @@
       <updated>1690736146280</updated>
       <workItem from="1690736147449" duration="71475000" />
       <workItem from="1691090890244" duration="9396000" />
-      <workItem from="1691119109464" duration="21075000" />
+      <workItem from="1691119109464" duration="21387000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -187,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691200945164</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Improve welcome letter &amp; unsubscribe page">
+      <created>1691289690051</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1691289690051</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,7 +222,8 @@
     <MESSAGE value="Install 2 necessary dependencies" />
     <MESSAGE value="Copied code from PythonAnywhere, updated README.md" />
     <MESSAGE value="Link to frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Link to frontend" />
+    <MESSAGE value="Improve welcome letter &amp; unsubscribe page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve welcome letter &amp; unsubscribe page" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NewsWebScraper$test.coverage" NAME="test Coverage Results" MODIFIED="1691186725570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

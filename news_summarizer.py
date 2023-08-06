@@ -51,7 +51,6 @@ class NewsSummarizer:
 
                     if article_content.get("text"):  # Check if the article content is valid
                         title = response["results"][article_index]["title"]
-                        print(article_content["text"])
                         summarized_content = summarize_article(article_content["text"])
                         self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
                         valid_articles_count += 1
@@ -83,7 +82,6 @@ def email_subscribers():
     for subscriber in subscribers:
         user_id, first_name, last_name, email, categories = subscriber
         categories_list = categories.split(',')
-        print(categories_list)
         email_body = f"<p>Hey {first_name} {last_name}, here is YourDailyRundown!</p>"
         for category in categories_list:
             email_body += f"<h2>{category.capitalize()}</h2>\n\n"

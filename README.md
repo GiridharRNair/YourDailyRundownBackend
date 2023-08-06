@@ -24,22 +24,24 @@ The Flask application defines the following API endpoints:
 
 ## News Summarization
 
-The news_summarizer.py file handles the news summarization process. It uses the google.generativeai library to perform AI-based summarization of news articles. The summarization process involves fetching top headlines from various categories using the Newsdata API and then generating a summary for each category using the AI model.
+The news_summarizer.py module is responsible for conducting news summarization utilizing advanced AI capabilities. Powered by the google.generativeai library, it orchestrates the process of generating concise news summaries from articles. Here's a step-by-step overview of how the summarization process takes place:
 
-1. Fetch top headlines for predefined news categories from the Newsdata API.
+1. **Fetching Top Headlines**:
+   The module interacts with the Newsdata API to retrieve the latest top 3 headlines for predefined news categories. Each category, such as business, politics, entertainment, general, health, science, sports, technology, and world, is processed individually.
 </br></br>
-2. Combine all descriptions from each category into a single text.
+2. **Article Extraction**:
+   For each retrieved headline, the module extracts article content from the provided link. This content is acquired using the World News API. The extraction process ensures that only valid articles with meaningful content are considered for summarization.
 </br></br>
-3. Use the AI model to generate a summary of the combined text in five comprehensive sentences.
+3. **Summarization Generation**:
+   The AI model, configured with parameters like model type, temperature, candidate count, and more, generates a comprehensive summary for the collected articles. The content is summarized into a cohesive paragraph, with the goal of condensing the key points and highlights.
 </br></br>
-4. Store the summarized news for each category in a dictionary.
+4. **Summarized News Storage**:
+   The generated summaries for each category are stored in a dictionary. This dictionary maintains an organized record of the summarized news content for future use.
+</br></br>
+5. **Subscriber Notification**:
+   The summarized news content is then used to create personalized newsletters for subscribers.  Using the SendGrid API, the module dispatches the crafted newsletters to the subscribers' email addresses based on their intrests. Each email includes a link allowing subscribers to easily unsubscribe from future notifications if desired. The email_subscribers function in news_summarizer.py is responsible for sending personalized newsletters to subscribers. It fetches the list of registered users from the database, generates a summary of news articles for each user's subscribed categories, and sends a personalized email to each user.
 
-## Sending Newsletters
-
-The email_subscribers function in news_summarizer.py is responsible for sending personalized newsletters to subscribers. It fetches the list of registered users from the database, generates a summary of news articles for each user's subscribed categories, and sends a personalized email to each user.
-
-The email content includes a greeting, personalized news summaries for each category, and an unsubscribe link.
-
+This comprehensive workflow showcases the integration of AI-based summarization, news article extraction, and efficient delivery of personalized news summaries to subscribers' inboxes. The entire process is orchestrated within the news_summarizer.py module, facilitating a seamless and informative news summarization experience.
 
 ## Scheduled Task
 

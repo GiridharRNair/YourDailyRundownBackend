@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-project_folder = os.path.expanduser('/home/GiridharNair/mysite')  # adjust as appropriate
+project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))
 
 app = Flask(__name__, template_folder="/home/GiridharNair/mysite/templates")
@@ -37,12 +37,15 @@ def add_user():
     last_name = data.get("lastName")
     email = data.get("email").lower()
     categories = ','.join(item['value'] for item in data.get("category"))
-    with sqlite3.connect(DB_NAME) as conn:
-        try:
-            add_user_to_database(conn, email, first_name, last_name, categories)
-            send_greeting_email(email, first_name, last_name, categories)
-        except Exception as e:
-            return jsonify({"error": e}), 500
+    conn = sqlite3.connect(DB_NAME)
+    try:
+        add_user_to_database(conn, email, first_name, last_name, categories)
+        send_greeting_email(email, first_name, last_name, categories)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
+
     return jsonify({"message": "User added successfully"}), 201
 
 
@@ -93,7 +96,9 @@ def unsubscribe(email):
 
 def send_greeting_email(email, first_name, last_name, categories):
     try:
-        categories_str = ', '.join(categories) if categories else 'general news'
+        categories_arr = categories.lower().split(',')
+        user_categories = ', '.join(categories_arr[:-1]) + \
+                          ', and ' + categories_arr[-1] if len(categories_arr) > 1 else categories_arr[0]
         greeting_email = Mail(
             from_email='yourdailyrundown@gmail.com',
             to_emails=email,
@@ -103,7 +108,7 @@ def send_greeting_email(email, first_name, last_name, categories):
                 f"<h2>Thanks for joining YourDailyRundown</h2>\n\n"
                 f"<p>Welcome to our newsletter! We're thrilled to have you on board.</p>\n\n"
                 f"<p>With our newsletter, you'll stay informed about the latest news and updates, all carefully "
-                f"curated and summarized to match your interests in {categories_str}.</p>\n\n"
+                f"curated and summarized to match your interest(s) in {user_categories}.</p>\n\n"
                 f"<p>Want to personalize your experience even further? You can easily update your preferences and "
                 f"name by re-registering for our newsletter. Don't worry about duplicate emails – we've got that "
                 f"covered, and all your changes will be recorded seamlessly.</p>\n\n"
@@ -144,5 +149,4 @@ def add_user_to_database(conn, email, first_name, last_name, categories):
 
 if __name__ == "__main__":
     create_table()
-
     app.run()  # Start the Flask application

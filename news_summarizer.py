@@ -5,10 +5,12 @@ from dotenv import load_dotenv
 from main import get_users
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
+from newsapi import NewsApiClient
 
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))
 
+newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))
 palm.configure(api_key=os.getenv('AI_API_KEY'))
 news_api_key = os.getenv('NEWS_API_KEY')
 extract_content_key = os.getenv('EXTRACT_CONTENT_API_KEY')
@@ -31,31 +33,29 @@ defaults = {
 
 class NewsSummarizer:
     def __init__(self):
-        self.categories = ['business', 'politics', 'entertainment', 'general', 'health',
-                           'science', 'sports', 'technology', 'world']
+        self.categories = ['business', 'entertainment', 'general', 'health',
+                           'science', 'sports', 'technology']
         self.categories_dict = {category: [] for category in self.categories}
 
     def get_top_headlines_for_categories(self):
         for category in self.categories:
-            response = requests.get(f'https://newsdata.io/api/1/news?apikey={news_api_key}&q'
-                                    f'={category}&country=us&language=en').json()
+            response = newsapi.get_top_headlines(category=category,
+                                                 language='en',
+                                                 country='us')
 
-            valid_articles_count = 0  # To keep track of valid articles for the current category
-            article_index = 0  # To keep track of the current article index
+            valid_articles_count = 0  # To store valid articles for the current category
 
-            while valid_articles_count < 3 and article_index < len(response["results"]):
-                if response["results"][article_index]["link"]:
-                    article_content = requests.get(f'https://api.worldnewsapi.com/extract-news?url='
-                                                   f'{response["results"][article_index]["link"]}&analyze'
-                                                   f'=false&api-key={extract_content_key}').json()
+            for article_index, article in enumerate(response["articles"]):
+                if valid_articles_count >= 3:
+                    break
 
-                    if article_content.get("text"):  # Check if the article content is valid
-                        title = response["results"][article_index]["title"]
-                        summarized_content = summarize_article(article_content["text"])
-                        self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
-                        valid_articles_count += 1
-
-                article_index += 1
+                article_content = get_valid_article(article["url"])
+                if article_content:
+                    title = article_content.get("title")
+                    summarized_content = summarize_article(article_content["text"])
+                    print(summarized_content)
+                    self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
+                    valid_articles_count += 1
 
     def get_summarized_news(self):
         self.get_top_headlines_for_categories()
@@ -103,6 +103,16 @@ def email_subscribers():
             print(f"Email sent to {email}, status code: {response.status_code}")
         except Exception as e:
             print(f"Failed to send email to {email}. Error: {str(e)}")
+
+
+def get_valid_article(article_url):
+    article_content = requests.get(f'https://api.worldnewsapi.com/extract-news?url='
+                                   f'{article_url}&analyze=false&api-key={extract_content_key}').json()
+    print(article_content)
+    if "Sorry, you have been blocked" not in article_content.get("title") \
+            and article_content.get("text"):  # Check if the article content is valid
+        return article_content
+    return None
 
 
 if __name__ == "__main__":

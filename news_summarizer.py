@@ -53,7 +53,6 @@ class NewsSummarizer:
                 if article_content:
                     title = article_content.get("title")
                     summarized_content = summarize_article(article_content["text"])
-                    print(summarized_content)
                     self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
                     valid_articles_count += 1
 
@@ -108,9 +107,9 @@ def email_subscribers():
 def get_valid_article(article_url):
     article_content = requests.get(f'https://api.worldnewsapi.com/extract-news?url='
                                    f'{article_url}&analyze=false&api-key={extract_content_key}').json()
-    print(article_content)
     if "Sorry, you have been blocked" not in article_content.get("title") \
-            and article_content.get("text"):  # Check if the article content is valid
+            and article_content.get("text") \
+            and "The Daily Hodl is a cryptocurrency news website" not in article_content.get("text"):
         return article_content
     return None
 

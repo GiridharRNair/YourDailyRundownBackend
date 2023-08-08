@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="READMD.md update">
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Used a different News API">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/news_summarizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/news_summarizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/users.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +73,7 @@
       <updated>1690736146280</updated>
       <workItem from="1690736147449" duration="71475000" />
       <workItem from="1691090890244" duration="9396000" />
-      <workItem from="1691119109464" duration="41508000" />
+      <workItem from="1691119109464" duration="43504000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -223,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691363960415</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Used a different News API">
+      <created>1691440782230</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1691440782230</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,7 +267,8 @@
     <MESSAGE value="Secure db connection, improve greeting email" />
     <MESSAGE value="Improve newsletter emails" />
     <MESSAGE value="READMD.md update" />
-    <option name="LAST_COMMIT_MESSAGE" value="READMD.md update" />
+    <MESSAGE value="Used a different News API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Used a different News API" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NewsWebScraper$test.coverage" NAME="test Coverage Results" MODIFIED="1691186725570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

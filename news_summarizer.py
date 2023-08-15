@@ -52,7 +52,9 @@ class NewsSummarizer:
                 article_content = get_valid_article(article["url"])
                 if article_content:
                     title = article_content.get("title")
-                    summarized_content = summarize_article(article_content["text"])
+                    summarized_content = summarize_article(article_content["text"].replace("**", ""))
+                    if summarized_content is None:
+                        continue
                     self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
                     valid_articles_count += 1
 
@@ -105,12 +107,27 @@ def email_subscribers():
 
 
 def get_valid_article(article_url):
-    article_content = requests.get(f'https://api.worldnewsapi.com/extract-news?url='
-                                   f'{article_url}&analyze=false&api-key={extract_content_key}').json()
-    if "Sorry, you have been blocked" not in article_content.get("title") \
-            and article_content.get("text") \
-            and "The Daily Hodl is a cryptocurrency news website" not in article_content.get("text"):
-        return article_content
+    # Construct the API URL
+    api_url = f'https://api.worldnewsapi.com/extract-news?url={article_url}&analyze=false&api-key={extract_content_key}'
+
+    try:
+        # Make the API request
+        response = requests.get(api_url)
+        response_data = response.json()
+
+        # Check if the response is successful and contains necessary data
+        if response.ok and response_data.get("title") and response_data.get("text"):
+            article_title = response_data["title"]
+            article_text = response_data["text"]
+
+            # Check if the article is not from The Daily Hodl and not blocked
+            if "The Daily Hodl is a cryptocurrency news website" not in article_text \
+                    and "Sorry, you have been blocked" not in article_title \
+                    and "Just a moment..." not in article_title:
+                return response_data
+    except requests.exceptions.RequestException as e:
+        print("Error making the API request:", e)
+
     return None
 
 

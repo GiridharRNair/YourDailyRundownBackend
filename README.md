@@ -4,6 +4,9 @@ The backend of YourDailyRundown is built with Python and Flask, a lightweight we
 
 [Frontend Repo](https://github.com/GiridharRNair/YourDailyRundown)
 
+Email Example:
+<img src="public/ExampleEmail.gif" alt="Email Example">
+
 ## Code Structure
 
 The backend code consists of two main files:

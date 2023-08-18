@@ -9,6 +9,12 @@ from newsapi import NewsApiClient
 
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))
+banned_titles = ['Sorry, you have been blocked', 'Just a moment...', 'Site Not Available', 'parade.com', 'thestreet.com']
+banned_desc = ['**A new subscription plan for The Financial Times is now available.** The plan offers full access to '
+               'articles dating back to 2000, real-time access to the news as it breaks, and access to premium '
+               'content. Subscribers will also have full access to Before Going to Press, Asia Supply Chain 100 '
+               'dataset access, and access to research insights.',
+               '**Dow Jones & Company Acquires Financial News Ltd.** Dow Jones & Company, the publisher of The Wall Street Journal, has acquired Financial News Ltd.', 'The Daily Hodl is a cryptocurrency news website']
 
 newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))
 palm.configure(api_key=os.getenv('AI_API_KEY'))
@@ -121,9 +127,7 @@ def get_valid_article(article_url):
             article_text = response_data["text"]
 
             # Check if the article is not from The Daily Hodl and not blocked
-            if "The Daily Hodl is a cryptocurrency news website" not in article_text \
-                    and "Sorry, you have been blocked" not in article_title \
-                    and "Just a moment..." not in article_title:
+            if article_text not in banned_desc and article_title not in banned_titles:
                 return response_data
     except requests.exceptions.RequestException as e:
         print("Error making the API request:", e)

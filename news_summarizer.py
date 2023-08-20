@@ -9,12 +9,14 @@ from newsapi import NewsApiClient
 
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))
-banned_titles = ['Sorry, you have been blocked', 'Just a moment...', 'Site Not Available', 'parade.com', 'thestreet.com']
+banned_titles = ['Sorry, you have been blocked', 'Just a moment...',
+                 'Site Not Available', 'parade.com', 'thestreet.com']
 banned_desc = ['**A new subscription plan for The Financial Times is now available.** The plan offers full access to '
                'articles dating back to 2000, real-time access to the news as it breaks, and access to premium '
                'content. Subscribers will also have full access to Before Going to Press, Asia Supply Chain 100 '
                'dataset access, and access to research insights.',
-               '**Dow Jones & Company Acquires Financial News Ltd.** Dow Jones & Company, the publisher of The Wall Street Journal, has acquired Financial News Ltd.', 'The Daily Hodl is a cryptocurrency news website']
+               '**Dow Jones & Company Acquires Financial News Ltd.** Dow Jones & Company, the publisher of The Wall '
+               'Street Journal, has acquired Financial News Ltd.', 'The Daily Hodl is a cryptocurrency news website']
 
 newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))
 palm.configure(api_key=os.getenv('AI_API_KEY'))
@@ -58,8 +60,10 @@ class NewsSummarizer:
                 article_content = get_valid_article(article["url"])
                 if article_content:
                     title = article_content.get("title")
-                    summarized_content = summarize_article(article_content["text"].replace("**", ""))
-                    if summarized_content is None:
+                    try:
+                        summarized_content = summarize_article(article_content["text"].replace("**", ""))
+                    except Exception as e:
+                        print(f"Error summarizing article: {str(e)}")
                         continue
                     self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
                     valid_articles_count += 1

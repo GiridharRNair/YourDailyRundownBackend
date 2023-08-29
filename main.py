@@ -102,9 +102,24 @@ def unsubscribe(email):
 def send_greeting_email(email, first_name, last_name, categories):
     """Send a welcome email to a newly registered user."""
     try:
-        categories_arr = categories.lower().split(',')
-        user_categories = ', '.join(categories_arr[:-1]) + \
-                          ', and ' + categories_arr[-1] if len(categories_arr) > 1 else categories_arr[0]
+        categories_list = categories.split(',')
+
+        modified_categories = []
+        for category in categories_list:
+            if category.lower() == "realestate":
+                modified_categories.append("Real Estate")
+            elif category.lower() == "nyregion":
+                modified_categories.append("NY Region")
+            elif category.lower() == "us":
+                modified_categories.append("U.S.")
+            else:
+                modified_categories.append(category)
+
+        if len(modified_categories) > 1:
+            user_categories = ', '.join(modified_categories[:-1]) + ', and ' + modified_categories[-1]
+        else:
+            user_categories = modified_categories[0]
+
         greeting_email = Mail(
             from_email='yourdailyrundown@gmail.com',
             to_emails=email,

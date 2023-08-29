@@ -6,7 +6,7 @@ from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 from newsplease import NewsPlease
 import google.generativeai as palm
-from  main import get_users
+from main import get_users
 
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))
@@ -120,7 +120,14 @@ def email_subscribers():
         print(categories_list)
         email_body = f"<p>Hey {first_name} {last_name}, here is YourDailyRundown!</p>"
         for category in categories_list:
-            email_body += f"<h2>{category.capitalize()}</h2>\n\n"
+            if category == "us":
+                email_body += "<h2>U.S.</h2>\n\n"
+            elif category == "nyregion":
+                email_body += "<h2>NY Region</h2>\n\n"
+            elif category == "realestate":
+                email_body += "<h2>Real Estate</h2>\n\n"
+            else:
+                email_body += f"<h2>{category.capitalize()}</h2>\n\n"
             for article in summarized_articles[category.lower()]:
                 title, summarized_content = article.split("<br/><br/>")
                 email_body += f"<p><strong>{title}</strong></p>\n\n"
@@ -153,8 +160,8 @@ def extract_article_details(article_url, article_title, category):
     Returns:
         str: The HTML-formatted article details with summarized content.
     """
-    article = NewsPlease.from_url(article_url)
     try:
+        article = NewsPlease.from_url(article_url)
         content = article.maintext
         summarized_content = summarize_article(content)
     except Exception as e:

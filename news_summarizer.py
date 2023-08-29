@@ -44,7 +44,7 @@ class NewsSummarizer:
         self.categories = [
             "arts", "automobiles", "business", "fashion", "food",
             "health", "home", "insider", "magazine", "movies",
-            "politics", "realestate", "science", "sports",
+            "politics", "realestate", "nyregion", "science", "sports",
             "technology", "theater", "travel", "us", "world"
         ]
         self.categories_dict = {category: [] for category in self.categories}

@@ -6,7 +6,7 @@ from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 from newsplease import NewsPlease
 import google.generativeai as palm
-from main_test import get_users
+from  main import get_users
 
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))

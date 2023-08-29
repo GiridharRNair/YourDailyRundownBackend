@@ -1,28 +1,22 @@
 import os
-import google.generativeai as palm
+import time
 import requests
 from dotenv import load_dotenv
-from main import get_users
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
-from newsapi import NewsApiClient
+from newsplease import NewsPlease
+import google.generativeai as palm
+from main_test import get_users
 
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))
-banned_titles = ['Sorry, you have been blocked', 'Just a moment...',
-                 'Site Not Available', 'parade.com', 'thestreet.com']
-banned_desc = ['**A new subscription plan for The Financial Times is now available.** The plan offers full access to '
-               'articles dating back to 2000, real-time access to the news as it breaks, and access to premium '
-               'content. Subscribers will also have full access to Before Going to Press, Asia Supply Chain 100 '
-               'dataset access, and access to research insights.',
-               '**Dow Jones & Company Acquires Financial News Ltd.** Dow Jones & Company, the publisher of The Wall '
-               'Street Journal, has acquired Financial News Ltd.', 'The Daily Hodl is a cryptocurrency news website']
 
-newsapi = NewsApiClient(api_key=os.getenv('NEWS_API_KEY'))
 palm.configure(api_key=os.getenv('AI_API_KEY'))
-news_api_key = os.getenv('NEWS_API_KEY')
-extract_content_key = os.getenv('EXTRACT_CONTENT_API_KEY')
-defaults = {
+nyt_key = os.getenv('NYT_API_KEY')
+
+ARTICLE_COUNT = 3
+API_REQUEST_INTERVAL = 8
+DEFAULTS = {
     'model': 'models/text-bison-001',
     'temperature': 0.6,
     'candidate_count': 1,
@@ -40,44 +34,71 @@ defaults = {
 
 
 class NewsSummarizer:
+    """
+    A class responsible for collecting and summarizing top news articles from various categories.
+    """
     def __init__(self):
-        self.categories = ['business', 'entertainment', 'general', 'health',
-                           'science', 'sports', 'technology']
+        """
+        Initializes the NewsSummarizer object with a list of news categories and an empty dictionary to store articles.
+        """
+        self.categories = [
+            "arts", "automobiles", "business", "fashion", "food",
+            "health", "home", "insider", "magazine", "movies",
+            "politics", "realestate", "science", "sports",
+            "technology", "theater", "travel", "us", "world"
+        ]
         self.categories_dict = {category: [] for category in self.categories}
 
     def get_top_headlines_for_categories(self):
+        """
+        Fetches top headlines for each news category and stores the scraped articles in the categories dictionary.
+        """
         for category in self.categories:
-            response = newsapi.get_top_headlines(category=category,
-                                                 language='en',
-                                                 country='us')
+            response = requests.get(f'https://api.nytimes.com/svc/topstories/v2/{category}.json?api-key={nyt_key}')
+            valid_articles_count = 0
 
-            valid_articles_count = 0  # To store valid articles for the current category
+            if response.status_code == 200:
+                articles_data = response.json().get('results', [])
 
-            for article_index, article in enumerate(response["articles"]):
-                if valid_articles_count >= 3:
-                    break
+                for article_data in articles_data:
+                    if valid_articles_count >= ARTICLE_COUNT:
+                        break
 
-                article_content = get_valid_article(article["url"])
-                if article_content:
-                    title = article_content.get("title")
-                    try:
-                        summarized_content = summarize_article(article_content["text"].replace("**", ""))
-                    except Exception as e:
-                        print(f"Error summarizing article: {str(e)}")
-                        continue
-                    self.categories_dict[category].append(f"{title}<br/><br/>{summarized_content}")
-                    valid_articles_count += 1
+                    scraped_article = extract_article_details(article_data.get("url"),
+                                                              article_data.get("title"),
+                                                              category)
+                    if scraped_article:
+                        valid_articles_count += 1
+                        self.categories_dict[category].append(scraped_article)
+            else:
+                print(f"Error fetching articles for {category}: {response.status_code}")
+            time.sleep(API_REQUEST_INTERVAL)
 
     def get_summarized_news(self):
+        """
+        Gathers top headlines for categories and returns the summarized articles in a dictionary.
+
+        Returns:
+            dict: A dictionary containing summarized news articles categorized by topics.
+        """
         self.get_top_headlines_for_categories()
         return self.categories_dict
 
 
 def summarize_article(content):
+    """
+    Summarizes the given article content using the PALM text generation API.
+
+    Args:
+        content (str): The content of the article to be summarized.
+
+    Returns:
+        str: The summarized article generated by the PALM API.
+    """
     prompt = f"""Summarize this news article in a comprehensive paragraph,
     without using bullet points:{content}"""
     response = palm.generate_text(
-        **defaults,
+        **DEFAULTS,
         prompt=prompt
     )
     if response is not None:
@@ -87,16 +108,20 @@ def summarize_article(content):
 
 
 def email_subscribers():
+    """
+    Sends personalized daily newsletters to subscribers with summarized articles based on their preferences.
+    """
     subscribers = get_users()
-    email_content = NewsSummarizer().get_summarized_news()
+    summarized_articles = NewsSummarizer().get_summarized_news()
 
     for subscriber in subscribers:
         user_id, first_name, last_name, email, categories = subscriber
         categories_list = categories.split(',')
+        print(categories_list)
         email_body = f"<p>Hey {first_name} {last_name}, here is YourDailyRundown!</p>"
         for category in categories_list:
             email_body += f"<h2>{category.capitalize()}</h2>\n\n"
-            for article in email_content[category.lower()]:
+            for article in summarized_articles[category.lower()]:
                 title, summarized_content = article.split("<br/><br/>")
                 email_body += f"<p><strong>{title}</strong></p>\n\n"
                 email_body += f"{summarized_content}<br/><br/>"
@@ -116,27 +141,28 @@ def email_subscribers():
             print(f"Failed to send email to {email}. Error: {str(e)}")
 
 
-def get_valid_article(article_url):
-    # Construct the API URL
-    api_url = f'https://api.worldnewsapi.com/extract-news?url={article_url}&analyze=false&api-key={extract_content_key}'
+def extract_article_details(article_url, article_title, category):
+    """
+    Extracts article details from the provided URL and summarizes the article content.
 
+    Args:
+        article_url (str): The URL of the article.
+        article_title (str): The title of the article.
+        category (str): The category of the article.
+
+    Returns:
+        str: The HTML-formatted article details with summarized content.
+    """
+    article = NewsPlease.from_url(article_url)
     try:
-        # Make the API request
-        response = requests.get(api_url)
-        response_data = response.json()
+        content = article.maintext
+        summarized_content = summarize_article(content)
+    except Exception as e:
+        print(f"Error summarizing article in {category.title()}: {str(e)}")
+        return
 
-        # Check if the response is successful and contains necessary data
-        if response.ok and response_data.get("title") and response_data.get("text"):
-            article_title = response_data["title"]
-            article_text = response_data["text"]
-
-            # Check if the article is not from The Daily Hodl and not blocked
-            if article_text not in banned_desc and article_title not in banned_titles:
-                return response_data
-    except requests.exceptions.RequestException as e:
-        print("Error making the API request:", e)
-
-    return None
+    if summarized_content is not None:
+        return f'<a href={article_url}>{article_title}</a><br/><br/>{summarized_content}'
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
+# Load environment variables
 project_folder = os.path.expanduser('/home/GiridharNair/mysite')
 load_dotenv(os.path.join(project_folder, '.env'))
 
@@ -15,6 +16,7 @@ DB_NAME = "/home/GiridharNair/mysite/users.db"
 
 
 def create_table():
+    """Create the users table in the database if it doesn't exist."""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("""
@@ -32,6 +34,7 @@ def create_table():
 
 @app.route("/register_user", methods=["POST"])
 def add_user():
+    """Add a new user to the database and send a greeting email."""
     data = request.json
     first_name = data.get("firstName")
     last_name = data.get("lastName")
@@ -51,6 +54,7 @@ def add_user():
 
 @app.route('/registered_users', methods=['GET'])
 def get_users():
+    """Retrieve a list of all registered users from the database."""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("""
@@ -65,6 +69,7 @@ def get_users():
 
 @app.route('/<email>/unsubscribe')
 def unsubscribe(email):
+    """Unsubscribe a user from the newsletter and render the unsubscribe page."""
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
@@ -95,6 +100,7 @@ def unsubscribe(email):
 
 
 def send_greeting_email(email, first_name, last_name, categories):
+    """Send a welcome email to a newly registered user."""
     try:
         categories_arr = categories.lower().split(',')
         user_categories = ', '.join(categories_arr[:-1]) + \
@@ -127,6 +133,7 @@ def send_greeting_email(email, first_name, last_name, categories):
 
 
 def add_user_to_database(conn, email, first_name, last_name, categories):
+    """Add a user to the database or update their details if they already exist."""
     try:
         with conn:
             cursor = conn.cursor()

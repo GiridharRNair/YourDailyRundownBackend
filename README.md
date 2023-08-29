@@ -60,3 +60,9 @@ To set up the project, make sure to:
    - `SENDGRID_API_KEY`: SendGrid API key.
    - `NYT_API_KEY`: New York Times API key.
 - Install required libraries using `pip`:
+  - pip install Flask Flask-Cors python-dotenv sendgrid news-please google-generativeai
+
+---
+
+This project demonstrates how to automate personalized daily newsletter delivery using Flask, APIs, and text generation. It provides a seamless experience for subscribers to stay informed about the latest news while maintaining flexibility in choosing their preferences.
+

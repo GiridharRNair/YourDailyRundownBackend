@@ -2,6 +2,7 @@ Flask==2.3.2
 Flask_Cors==4.0.0
 news_please==1.5.33
 protobuf==4.24.2
+pymongo==4.5.0
 python-dotenv==1.0.0
 Requests==2.31.0
 sendgrid==6.10.0

@@ -9,7 +9,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="15">
+          <list size="16">
             <item index="0" class="java.lang.String" itemvalue="newsapi" />
             <item index="1" class="java.lang.String" itemvalue="google" />
             <item index="2" class="java.lang.String" itemvalue="rsa" />
@@ -25,6 +25,7 @@
             <item index="12" class="java.lang.String" itemvalue="warcio" />
             <item index="13" class="java.lang.String" itemvalue="blinker" />
             <item index="14" class="java.lang.String" itemvalue="protobuf" />
+            <item index="15" class="java.lang.String" itemvalue="pyodbc" />
           </list>
         </value>
       </option>

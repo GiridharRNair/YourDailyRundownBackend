@@ -146,4 +146,4 @@ def add_user_to_database(email, first_name, last_name, categories):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

@@ -1,0 +1,31 @@
+name: Run news_summarizer.py
+
+on:
+  schedule:
+    - cron: '0 14 * * *' # At 8:00 AM CST (14:00 UTC) every day
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo content
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute Python script
+        env:
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          NYT_API_KEY: ${{ secrets.NYT_API_KEY }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        run: python news_summarizer.py

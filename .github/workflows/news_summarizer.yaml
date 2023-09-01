@@ -2,7 +2,7 @@ name: Run news_summarizer.py
 
 on:
   schedule:
-    - cron: '0 14 * * *' # At 8:00 AM CST (14:00 UTC) every day
+    - cron: '40 3 * * *' # At 8:00 AM CST (14:00 UTC) every day
 
 jobs:
   build:

@@ -63,6 +63,11 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A10594E263514EB88E605F7E240303F0 }}
 
       - name: Set environment variables
+        run: |
+          echo "AI_API_KEY=$AI_API_KEY" >> $GITHUB_ENV
+          echo "SENDGRID_API_KEY=$SENDGRID_API_KEY" >> $GITHUB_ENV
+          echo "NYT_API_KEY=$NYT_API_KEY" >> $GITHUB_ENV
+          echo "MONGO_URI=$MONGO_URI" >> $GITHUB_ENV
         env:
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}

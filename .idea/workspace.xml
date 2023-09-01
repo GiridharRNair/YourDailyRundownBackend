@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Use repo secrets">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/main_yourdailyrundown.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main_yourdailyrundown.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +153,7 @@
       <workItem from="1693324774381" duration="5080000" />
       <workItem from="1693341955489" duration="4093000" />
       <workItem from="1693371929751" duration="14561000" />
-      <workItem from="1693446778728" duration="18359000" />
+      <workItem from="1693446778728" duration="18707000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -407,7 +407,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693510969881</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Use repo secrets">
+      <created>1693529695094</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1693529695094</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

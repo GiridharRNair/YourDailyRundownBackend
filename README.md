@@ -1,68 +1,47 @@
 # YourDailyRundown Backend
 
-This project automates the process of delivering personalized daily newsletters to subscribers. It involves two main scripts: `main.py` and `news_summarizer.py`. Additionally, the project is scheduled to run every day at 8 am CST using PythonAnywhere's scheduled task feature.
+This is the backend for YourDailyRundown, a news summarization and email delivery service. The backend is responsible for handling user registration, email delivery of summarized news articles, and news article summarization using Google's PaLM AI model.
 
-[Frontend Repo](https://github.com/GiridharRNair/YourDailyRundown)
+Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown </br>
+Live Demo: https://giridharrnair.github.io/YourDailyRundown/
 
-Example email of automobile category:
-<img alt="AutomobileCategoryExample" src="public/AutomobileCategoryExample.png" />
+Example email of the health category:
 
-## `main.py`
+<img alt="AutomobileCategoryExample" src="public/HealthCategoryExample.png" />
 
-This script serves as a Flask application that handles user registration, subscription preferences, and sending greeting and unsubscribe emails. It also provides routes to retrieve registered users and to unsubscribe users.
+## Architecture
 
-### Endpoints
+The backend of YourDailyRundown is a Python-based application built using Flask for the web framework. It is responsible for the following main functionalities:
 
-- `POST /register_user`: Registers a new user with their first name, last name, email, and subscription categories. Sends a greeting email to the user.
-- `GET /registered_users`: Retrieves a list of all registered users from the database.
-- `GET /<email>/unsubscribe`: Unsubscribes a user from the newsletter and renders the unsubscribe page.
+1. **User Registration**: Users can register with their first name, last name, email, and select news categories they are interested in. This information is stored in a MongoDB database.
 
-## `news_summarizer.py`
+2. **Email Delivery**: Summarized news articles are sent to users via email on a daily schedule.
 
-This script performs the following tasks:
+3. **News Article Summarization**: The backend retrieves top headlines from the New York Times API for various categories and summarizes these articles using a generative AI model.
 
-1. Fetches top headlines for various news categories from the New York Times API.
-2. Summarizes the content of fetched news articles using the PALM text generation API.
-3. Retrieves a list of subscribers from the database using the `get_users()` function from `main.py`.
-4. Generates personalized newsletters for each subscriber based on their subscription preferences and the summarized articles.
+4. **Unsubscribe**: Users can unsubscribe from the service by clicking an unsubscribe link in the email. Their information is then removed from the database.
 
-The script uses the following APIs and libraries:
+## Components
 
-- The New York Times API: Fetches top news articles for various categories.
-- The PALM text generation API: Summarizes article content.
-- The `sendgrid` library: Sends personalized newsletters to subscribers.
-- The `newsplease` library: Extracts article details from article URLs.
+### `main.py`
+This is the main Flask application responsible for handling user registration, email subscription, and unsubscribing users. It utilizes Flask for creating API endpoints and interacts with a MongoDB database to store user information. Here is a summary of its 3 API endpoints:
 
-## How It Works
+* `/register_user`: This endpoint registers a new user by extracting user data from the request JSON. It inserts the user's information into the MongoDB database and sends a welcome email to the user.
 
-1. `main.py`:
-   - Users can register via the `/register_user` endpoint, providing their details and subscription preferences.
-   - User information is stored in an SQLite database.
-   - Greeting emails are sent to users upon successful registration.
+* `/registered_users`: This endpoint retrieves a list of registered users from the MongoDB database and returns it as a JSON response.
 
-2. `news_summarizer.py`:
-   - The script fetches top headlines for various news categories from the New York Times API.
-   - For each article, it extracts details and content using the `newsplease` library.
-   - The content is summarized using the PALM text generation API.
-   - Personalized newsletters are generated for each subscriber based on their subscription preferences and the summarized articles.
-   - The newsletters are sent using the `sendgrid` library.
+* `/<email>/unsubscribe`: This endpoint handles the unsubscribe process for a user with the provided email address. It deletes the user's information from the MongoDB database and renders an unsubscribe confirmation page.
 
-3. Daily Automation:
-   - The `news_summarizer.py` script is scheduled to run daily at 8 am CST using PythonAnywhere's scheduled task feature.
-   - It fetches, summarizes, and sends personalized newsletters to subscribers.
+### `news_summarizer.py`
+This script is responsible for summarizing news articles from various categories, sending email newsletters to subscribers, and fetching articles from the New York Times API.
 
-## Configuration
+## YAML Files
 
-To set up the project, make sure to:
+### `main_yourdailyrundown.yaml`
+This YAML file defines a GitHub Actions workflow for building and deploying the Python application to Azure Web App.
 
-- Configure environment variables in the `.env` file:
-   - `AI_API_KEY`: PALM text generation API key.
-   - `SENDGRID_API_KEY`: SendGrid API key.
-   - `NYT_API_KEY`: New York Times API key.
-- Install required libraries using `pip`:
-  - pip install Flask Flask-Cors python-dotenv sendgrid news-please google-generativeai
+### `news_summarizer.yaml`
+This YAML file defines a GitHub Actions workflow for running `news_summarizer.py` on a schedule, daily at 8:00 AM CST (13:00 UTC).
 
----
-
-This project demonstrates how to automate personalized daily newsletter delivery using Flask, APIs, and text generation. It provides a seamless experience for subscribers to stay informed about the latest news while maintaining flexibility in choosing their preferences.
-
+## License
+This project is licensed under the MIT License. Feel free to contribute to this project by opening issues or pull requests.

@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Testing cronjob yaml file" />
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Loosen range of packages">
+      <change afterPath="$PROJECT_DIR$/public/HealthCategoryExample.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/news_summarizer.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/news_summarizer.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/AutomobileCategoryExample.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,12 +83,12 @@
       <recent name="$PROJECT_DIR$/templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/public" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.news_summarizer">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="NewsWebScraper" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -127,8 +135,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.news_summarizer" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -150,7 +158,7 @@
       <workItem from="1693324774381" duration="5080000" />
       <workItem from="1693341955489" duration="4093000" />
       <workItem from="1693371929751" duration="14561000" />
-      <workItem from="1693446778728" duration="26274000" />
+      <workItem from="1693446778728" duration="32381000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -432,7 +440,21 @@
       <option name="project" value="LOCAL" />
       <updated>1693539290076</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Testing cronjob yaml file">
+      <created>1693540233648</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1693540233648</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Loosen range of packages">
+      <created>1693540468065</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1693540468065</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -451,7 +473,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Uninstalled unwanted dependencies" />
     <MESSAGE value="Install 2 necessary dependencies" />
     <MESSAGE value="Copied code from PythonAnywhere, updated README.md" />
     <MESSAGE value="Link to frontend" />
@@ -476,7 +497,8 @@
     <MESSAGE value="Fixing env variables" />
     <MESSAGE value="Automate news distribution daily" />
     <MESSAGE value="Testing cronjob yaml file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testing cronjob yaml file" />
+    <MESSAGE value="Loosen range of packages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loosen range of packages" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
@@ -485,9 +507,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NewsWebScraper$news_summarizer_test.coverage" NAME="news_summarizer_test Coverage Results" MODIFIED="1693342772217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$test.coverage" NAME="test Coverage Results" MODIFIED="1693429955171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/NewsWebScraper$news_summarizer.coverage" NAME="news_summarizer Coverage Results" MODIFIED="1693528620584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NewsWebScraper$news_summarizer.coverage" NAME="news_summarizer Coverage Results" MODIFIED="1693543513849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$del.coverage" NAME="del Coverage Results" MODIFIED="1691198176516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/NewsWebScraper$main.coverage" NAME="main Coverage Results" MODIFIED="1693532530821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NewsWebScraper$main.coverage" NAME="main Coverage Results" MODIFIED="1693541280118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$main_test.coverage" NAME="main_test Coverage Results" MODIFIED="1693430872757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

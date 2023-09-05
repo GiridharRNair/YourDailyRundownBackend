@@ -1,6 +1,7 @@
 import os
 import time
 import requests
+from datetime import date
 import google.generativeai as palm
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -37,9 +38,9 @@ DEFAULTS = {
 }
 
 CATEGORY_MAPPING = {
-    "Realestate": "Real Estate",
-    "Nyregion": "NY Region",
-    "Us": "U.S."
+    "realestate": "Real Estate",
+    "nyregion": "NY Region",
+    "us": "U.S."
 }
 
 
@@ -153,6 +154,12 @@ def build_email(email, first_name, last_name, categories, articles):
         for article in articles.get(category, []):
             email_body += f'<a href="{article["url"]}">{article["title"]}</a><br/>{article["content"]}<br/><br/>'
     email_body += f"<a href='https://yourdailyrundown.azurewebsites.net/{email}/unsubscribe'>Want to unsubscribe?</a>"
+    email_body += (
+        "<br/><br/>Want to change your preferences? " 
+        "Just <a href='https://giridharrnair.github.io/YourDailyRundown/'>re-register for our newsletter</a>. "
+        "Don't worry about duplicate emails – we've got that covered, and all your changes will be "
+        "recorded seamlessly.</p>"
+    )
     return email_body
 
 
@@ -166,7 +173,7 @@ def send_email(recipent, email_body):
     """
     news_letter = Mail(from_email='yourdailyrundown@gmail.com',
                        to_emails=recipent,
-                       subject='Your Daily Rundown',
+                       subject='Your Daily Rundown - ' + str(date.today()),
                        html_content=email_body)
     try:
         email_sender.send(news_letter)

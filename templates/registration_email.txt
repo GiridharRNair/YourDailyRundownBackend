@@ -6,7 +6,7 @@
 
 <p>With our newsletter, you'll stay informed about the latest news and updates, all carefully curated and summarized to match your interest(s) in {2}.</p>
 
-<p>Want to personalize your experience even further? You can easily update your preferences and name by re-registering for our newsletter. Don't worry about duplicate emails – we've got that covered, and all your changes will be recorded seamlessly.</p>
+<p>Want to personalize your experience even further? You can easily update your preferences and name by <a href='https://giridharrnair.github.io/YourDailyRundown/'> re-registering for our newsletter </a>. Don't worry about duplicate emails – we've got that covered, and all your changes will be recorded seamlessly.</p>
 
 <p>If, at any point, you wish to stop receiving our updates, you can simply click the <a href='https://yourdailyrundown.azurewebsites.net/{3}/unsubscribe'>unsubscribe</a> link provided at the bottom of each email.</p>
 

@@ -1,4 +1,4 @@
-name: Run news_summarizer.py
+name: Run email_subscribers.py
 
 on:
   schedule:
@@ -28,4 +28,4 @@ jobs:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           NYT_API_KEY: ${{ secrets.NYT_API_KEY }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-        run: python news_summarizer.py
+        run: python email_subscribers.py

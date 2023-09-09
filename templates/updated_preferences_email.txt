@@ -1,8 +1,8 @@
 <p>Hey {0} {1},</p>
 
-<h2>Thanks for joining YourDailyRundown</h2>
+<h2>Your preferences has been updated successfully!</h2>
 
-<p>Welcome to our newsletter! We're thrilled to have you on board.</p>
+<p>We wanted to let you know that we've successfully updated your newsletter preferences based on your recent request.</p>
 
 <p>With our newsletter, you'll stay informed about the latest news and updates, all carefully curated and summarized to match your interest(s) in {2}.</p>
 

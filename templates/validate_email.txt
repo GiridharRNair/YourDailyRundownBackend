@@ -1,0 +1,11 @@
+<p>Hey {0} {1},</p>
+
+<h2>We're almost there!</h2>
+
+<p>We're thrilled to have you join us! But before you can enjoy our newsletter, we need to ensure your email is valid.</p>
+
+<p>Simply click here: <a href='https://yourdailyrundown.azurewebsites.net/{2}/validate'>Validate Your Email</a> to complete your registration.</p>
+
+<p>If you didn't expect to receive this email and want to opt-out, no worries. Just click here to <a href='https://yourdailyrundown.azurewebsites.net/{2}/unsubscribe'>unsubscribe</a>.</p>
+
+<p>Warm regards,<br />Giridhar Nair<br />YourDailyRundown Team</p>

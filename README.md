@@ -39,7 +39,7 @@ The backend of YourDailyRundown is a Python-based application built using the Fl
 * `/update_user_preferences`: Allows existing users to update their preferences using JSON data, updating their information in the database and sending a confirmation email.
 
 
-* `/<uuid>/get_user_categories`: Retrieves user information, including first name, last name, and categories, for a validated user based on their UUID.
+* `/<uuid>/get_user_info`: Retrieves user information, including first name, last name, and categories, and whether they're validated or not based on their UUID.
 
 
 * `/<uuid>/validate`: Validates a user's email address, updates their validation status, sends a welcome email, and renders a validation success confirmation page.

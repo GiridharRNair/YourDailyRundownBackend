@@ -124,7 +124,7 @@ def update_existing_user():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/<uuid>/get_user_categories', methods=['GET'])
+@app.route('/<uuid>/get_user_info', methods=['GET'])
 def get_user_info(uuid):
     """
     Get user information, including first name, last name, and categories, for a validated user.

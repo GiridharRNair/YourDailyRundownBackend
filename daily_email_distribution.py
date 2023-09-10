@@ -21,10 +21,10 @@ CATEGORY_MAPPING = {
 EMAIL_CLOSER = (
     """
     <p>Interested in customizing your experience? Click here to update your preferences and name: 
-    <a href='https://giridharrnair.github.io/YourDailyRundown/{}/'>Update Preferences</a>. 
+    <a href='https://your-daily-rundown.vercel.app/{}/'>Update Preferences</a>. 
     Rest assured, you won't receive duplicate emails, and all your changes will be seamlessly recorded.</p>
     
-    <a href='https://yourdailyrundown.azurewebsites.net/{}/unsubscribe'>Want to unsubscribe?</a>
+    <a href='https://your-daily-rundown.vercel.app/{}/unsubscribe'>Want to unsubscribe?</a>
     """
 )
 
@@ -87,7 +87,7 @@ def build_email(uuid, first_name, last_name, categories, articles):
         email_body += f"<h2>{formatted_category.title()}</h2>\n\n"
         for article in articles.get(category, []):
             email_body += f'<a href="{article["url"]}">{article["title"]}</a><br/>{article["content"]}<br/><br/>'
-    email_body += EMAIL_CLOSER.format(uuid)
+    email_body += EMAIL_CLOSER.format(uuid, uuid)
     return email_body
 
 

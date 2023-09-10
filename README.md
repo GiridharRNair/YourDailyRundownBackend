@@ -6,8 +6,8 @@ Welcome to the YourDailyRundown Backend repository! This backend serves as the c
 
 YourDailyRundown is a service that simplifies the consumption of news articles. It aggregates news articles from various categories and delivers summarized versions to users via email. The backend handles critical tasks such as user registration and validation, article summarization using Google's PaLM AI model, and email distribution. News articles are sourced from the New York Times API and extracted using [News-Please](https://github.com/fhamborg/news-please).
 
-Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown </br>
-Live Demo: https://giridharrnair.github.io/YourDailyRundown/
+Live Demo: https://your-daily-rundown.vercel.app/ </br>
+Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown 
 
 **Example email of the health category**:
 
@@ -19,11 +19,14 @@ The backend of YourDailyRundown is a Python-based application built using the Fl
 
 1. **User Registration**: Users can register with their first name, last name, email, and select news categories they are interested in. This information is stored in a MongoDB database after user validation.
 
-2. **Email Delivery**: Summarized news articles are sent to users via email on a daily schedule at 8 AM CST (13:00 UTC).
 
-3. **News Article Summarization**: The backend retrieves top headlines from the New York Times API for various categories and summarizes these articles using a Google's PaLM AI.
+2. **News Article Summarization**: To provide users with a concise overview of the day's top headlines, the backend retrieves news articles from the New York Times API across various categories. It then leverages Google's PaLM AI to generate accurate and informative article summaries. This summarization process helps users quickly grasp the key points of each article.
 
-4. **Unsubscribe**: Users can unsubscribe from the service by clicking an unsubscribe link in the email. Their information is then removed from the database.
+
+3. **Email Delivery**: YourDailyRundown ensures that users stay informed by delivering the summarized news articles, from the previous step, to their email inbox. Articles are sent out daily at 8 AM CST (13:00 UTC) based on the user's selected preferences and interests.
+
+
+4. **Unsubscribe**: For users who wish to discontinue the service, YourDailyRundown offers a straightforward unsubscribe option. By clicking the unsubscribe link provided in the daily email, users can easily opt out of receiving further newsletters. The backend ensures that their information is promptly removed from the database.
 
 ## Components
 
@@ -47,8 +50,8 @@ The backend of YourDailyRundown is a Python-based application built using the Fl
 ### `news_summarizer.py`
 `news_summarizer.py` is responsible for summarizing, using Google's PaLM AI, news articles from various categories sourced from the New York Times API, scraped using [News-Please](https://github.com/fhamborg/news-please).
 
-### `email_subscribers.py`
-`email_subscribers.py` sends the summarized news articles from `news_summarizer.py` to subscribers via email. It retrieves the list of validated subscribers from the MongoDB collection and builds the email content with summarized news articles for the specified categories.
+### `daily_email_distribution.py`
+`daily_email_distribution.py` sends the summarized news articles from `news_summarizer.py` to subscribers via email. It retrieves the list of validated subscribers from the MongoDB collection and builds the email content with summarized news articles for the specified categories.
 
 ## YAML Files
 

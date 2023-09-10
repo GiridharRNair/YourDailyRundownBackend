@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="User validation and modularization of code">
-      <change afterPath="$PROJECT_DIR$/example.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/feedback_email.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/user_already_validated.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/user_unsubscribe_email.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/email_subscribers.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/daily_email_distribution.yaml" afterDir="false" />
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Change preferences and unsubscribe efficiently">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email_subscribers.py" beforeDir="false" afterPath="$PROJECT_DIR$/daily_email_distribution.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/daily_email_distribution.py" beforeDir="false" afterPath="$PROJECT_DIR$/daily_email_distribution.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/news_summarizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/news_summarizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/registration_email.txt" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration_email.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/updated_preferences_email.txt" beforeDir="false" afterPath="$PROJECT_DIR$/templates/updated_preferences_email.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_unsubscribe_email.txt" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_unsubscribe_email.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/validate_email.txt" beforeDir="false" afterPath="$PROJECT_DIR$/templates/validate_email.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +162,7 @@
       <workItem from="1693341955489" duration="4093000" />
       <workItem from="1693371929751" duration="14561000" />
       <workItem from="1693446778728" duration="35936000" />
-      <workItem from="1694298307955" duration="25477000" />
+      <workItem from="1694298307955" duration="28635000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -478,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694221650825</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Change preferences and unsubscribe efficiently">
+      <created>1694334097519</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1694334097519</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,7 +498,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Copied code from PythonAnywhere, updated README.md" />
     <MESSAGE value="Link to frontend" />
     <MESSAGE value="Improve welcome letter &amp; unsubscribe page" />
     <MESSAGE value="Secure db connection, improve greeting email" />
@@ -522,7 +522,8 @@
     <MESSAGE value="Loosen range of packages" />
     <MESSAGE value="Update README.md" />
     <MESSAGE value="User validation and modularization of code" />
-    <option name="LAST_COMMIT_MESSAGE" value="User validation and modularization of code" />
+    <MESSAGE value="Change preferences and unsubscribe efficiently" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change preferences and unsubscribe efficiently" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
@@ -534,7 +535,7 @@
     <SUITE FILE_PATH="coverage/NewsWebScraper$news_summarizer.coverage" NAME="news_summarizer Coverage Results" MODIFIED="1694281694336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$del.coverage" NAME="del Coverage Results" MODIFIED="1691198176516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$email_subscribers.coverage" NAME="email_subscribers Coverage Results" MODIFIED="1694281748607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/NewsWebScraper$main.coverage" NAME="main Coverage Results" MODIFIED="1694332960983" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NewsWebScraper$main.coverage" NAME="main Coverage Results" MODIFIED="1694366914903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$main_test.coverage" NAME="main_test Coverage Results" MODIFIED="1693430872757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

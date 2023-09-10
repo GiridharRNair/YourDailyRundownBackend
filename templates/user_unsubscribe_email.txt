@@ -6,7 +6,7 @@
 
 <p>If you ever change your mind and decide to re-subscribe in the future, you can do so by clicking the link below:</p>
 
-<p><a class="button" href="https://giridharrnair.github.io/YourDailyRundown/">Re-subscribe</a></p>
+<p><a class="button" href="https://your-daily-rundown.vercel.app/">Re-subscribe</a></p>
 
 <p>We want to thank you for being part of our community. If you have any feedback or suggestions for improvement, please don't hesitate to reach out.</p>
 

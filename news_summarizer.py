@@ -80,9 +80,12 @@ def extract_article_details(article_url, article_title, category):
     """
     Extract article details, summarize the content, and return a dictionary with relevant information.
 
-    :param article_url: str, URL of the article.
-    :param article_title: str, Title of the article.
-    :param category: str, Category of the article.
+    :param article_url: URL of the article.
+    :type article_url: str
+    :param article_title: Title of the article.
+    :type article_title: str
+    :param category: Category of the article.
+    :type category: str
 
     :return: dict, A dictionary containing title, URL, and summarized content of the article.
     :rtype: dict
@@ -101,7 +104,8 @@ def fetch_articles_for_category(category):
     """
     Fetch top articles for a specific category from the New York Times API.
 
-    :param category: str, The category for which to fetch articles.
+    :param category: The category for which to fetch articles.
+    :type category: str
 
     :return: list, A list of dictionaries containing article information.
     :rtype: list
@@ -125,7 +129,8 @@ def summarize_article(content):
     """
     Summarize the provided article content using the generative AI model.
 
-    :param content: str, The content of the article to be summarized.
+    :param content: The content of the article to be summarized.
+    :type content: str
 
     :return: str, The summarized article text.
     :rtype: str

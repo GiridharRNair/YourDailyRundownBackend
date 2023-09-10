@@ -6,6 +6,6 @@
 
 <p>Simply click here: <a href='https://yourdailyrundown.azurewebsites.net/{2}/validate'>Validate Your Email</a> to complete your registration.</p>
 
-<p>If you didn't expect to receive this email and want to opt-out, no worries. Just click here to <a href='https://yourdailyrundown.azurewebsites.net/{2}/unsubscribe'>unsubscribe</a>.</p>
+<p>If you didn't expect to receive this email and want to opt-out, no worries. Just click here to <a href='https://your-daily-rundown.vercel.app/{2}/unsubscribe'>unsubscribe</a>.</p>
 
 <p>Warm regards,<br />Giridhar Nair<br />YourDailyRundown Team</p>

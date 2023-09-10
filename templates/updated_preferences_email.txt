@@ -6,7 +6,11 @@
 
 <p>With our newsletter, you'll stay informed about the latest news and updates, all carefully curated and summarized to match your interest(s) in {2}.</p>
 
-<p>Want to personalize your experience even further? You can easily update your preferences and name by <a href='https://giridharrnair.github.io/YourDailyRundown/'> re-registering for our newsletter </a>. Don't worry about duplicate emails – we've got that covered, and all your changes will be recorded seamlessly.</p>
+<p>If you wish to customize your experience further, you can easily update your preferences and personal information by clicking the link below:</p>
+
+<p><a class="button" href="https://giridharrnair.github.io/YourDailyRundown/{3}/">Update Preferences</a></p>
+
+<p>Rest assured, you won't receive duplicate emails, and all your changes will be seamlessly recorded.</p>
 
 <p>If, at any point, you wish to stop receiving our updates, you can simply click the <a href='https://yourdailyrundown.azurewebsites.net/{3}/unsubscribe'>unsubscribe</a> link provided at the bottom of each email.</p>
 

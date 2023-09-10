@@ -8,7 +8,8 @@ from newsplease import NewsPlease
 load_dotenv()
 
 ARTICLE_COUNT = 3
-API_REQUEST_INTERVAL = 8
+RETRY_ATTEMPTS = 3
+API_REQUEST_INTERVAL = 10
 
 palm.configure(api_key=os.getenv('AI_API_KEY'))
 nyt_api_key = os.getenv('NYT_API_KEY')
@@ -105,12 +106,19 @@ def fetch_articles_for_category(category):
     :return: list, A list of dictionaries containing article information.
     :rtype: list
     """
-    response = requests.get(f'https://api.nytimes.com/svc/topstories/v2/{category}.json?api-key={nyt_api_key}')
-    if response.status_code == 200:
-        return response.json().get('results', [])
-    else:
-        print(f"Error fetching articles for {category}: {response.status_code}")
-        return []
+    for attempt in range(RETRY_ATTEMPTS):
+        response = requests.get(f'https://api.nytimes.com/svc/topstories/v2/{category}.json?api-key={nyt_api_key}')
+        if response.status_code == 200:
+            return response.json().get('results', [])
+        elif response.status_code == 504:
+            print(f"502 Bad Gateway Error - Retry attempt {attempt + 1}/{RETRY_ATTEMPTS}")
+            time.sleep(API_REQUEST_INTERVAL)
+        else:
+            print(f"Error fetching articles for {category}: {response.status_code}")
+            return []
+
+    print(f"Unable to fetch articles for {category} after {RETRY_ATTEMPTS} retry attempts.")
+    return []
 
 
 def summarize_article(content):

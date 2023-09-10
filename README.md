@@ -1,18 +1,21 @@
 # YourDailyRundown Backend
 
+Welcome to the YourDailyRundown Backend repository! This backend serves as the core of YourDailyRundown, an email service designed to summarize news articles and deliver them to users. In this README, we'll provide an overview of the project, its architecture, components, environment variables, and licensing information.
 
-This serves as the backend for YourDailyRundown, an email service that summarizes news articles and delivers them. The backend has the crucial tasks of managing user registration and validation, as well as sending out these summaries, which are generated using Google's PaLM AI model. The news articles are gathered from the New York Times API and extracted using [News-Please](https://github.com/fhamborg/news-please).
+## Overview
+
+YourDailyRundown is a service that simplifies the consumption of news articles. It aggregates news articles from various categories and delivers summarized versions to users via email. The backend handles critical tasks such as user registration and validation, article summarization using Google's PaLM AI model, and email distribution. News articles are sourced from the New York Times API and extracted using [News-Please](https://github.com/fhamborg/news-please).
 
 Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown </br>
 Live Demo: https://giridharrnair.github.io/YourDailyRundown/
 
-Example email of the health category:
+**Example email of the health category**:
 
 <img alt="AutomobileCategoryExample" src="public/HealthCategoryExample.png" />
 
 ## Architecture
 
-The backend of YourDailyRundown is a Python-based application built using Flask for the web framework. It is responsible for the following main functionalities:
+The backend of YourDailyRundown is a Python-based application built using the Flask web framework. It is responsible for the following main functionalities:
 
 1. **User Registration**: Users can register with their first name, last name, email, and select news categories they are interested in. This information is stored in a MongoDB database after user validation.
 
@@ -27,13 +30,19 @@ The backend of YourDailyRundown is a Python-based application built using Flask 
 ### `main.py`
 `main.py` is the main Flask application responsible for handling user registration, validation, and unsubscription. It utilizes Flask to create API endpoints and interacts with a MongoDB database to store user information. Here's an overview of its API endpoints:
 
-* `/register_user`: This endpoint registers a new user by extracting user data from the request JSON. It inserts the user's information into the MongoDB database and sends an email notification to validate the user's email. If the user's email exists in the database, the user's preferences will be updated from the request JSON and an email notification will be sent regarding the changes.
+* `/register_user`: Registers a new user based on JSON data, inserts their information into a MongoDB database, and sends an email for email validation.
 
 
-* `/<email>/validate`: This endpoint handles the email validation process for a user with the provided email address. It updates the user's validation status in the database, sends a greeting email to the user, and renders a validation success confirmation page.
+* `/update_user_preferences`: Allows existing users to update their preferences using JSON data, updating their information in the database and sending a confirmation email.
 
 
-* `/<email>/unsubscribe`: This endpoint handles the unsubscribe process for a user with the provided email address. It deletes the user's information from the MongoDB database and renders an unsubscribe confirmation page.
+* `/<uuid>/get_user_categories`: Retrieves user information, including first name, last name, and categories, for a validated user based on their UUID.
+
+
+* `/<uuid>/validate`: Validates a user's email address, updates their validation status, sends a welcome email, and renders a validation success confirmation page.
+
+
+* `/unsubscribe`: Unsubscribes users from email notifications, sends their feedback to the developer, and confirms the unsubscription via email.
 
 ### `news_summarizer.py`
 `news_summarizer.py` is responsible for summarizing, using Google's PaLM AI, news articles from various categories sourced from the New York Times API, scraped using [News-Please](https://github.com/fhamborg/news-please).
@@ -46,8 +55,21 @@ The backend of YourDailyRundown is a Python-based application built using Flask 
 ### `main_yourdailyrundown.yaml`
 This YAML file defines a GitHub Actions workflow for building and deploying the Python application to Azure Web App.
 
-### `email_subscribers.yaml`
-This YAML file defines a GitHub Actions workflow for running `email_subscribers.py` on a schedule, daily at 8:00 AM CST (13:00 UTC).
+### `daily_email_distribution.yaml`
+This YAML file defines a GitHub Actions workflow for running the daily_email_distribution.py script on a schedule, daily at 8:00 AM CST (13:00 UTC).
+
+## Environment Variables
+To run the YourDailyRundown Backend, you'll need to set the following environment variables:
+
+`AI_API_KEY`= Your Google PaLM AI API Key.
+
+`SENDGRID_API_KEY`=Your SendGrid API Key for Email Distribution.
+
+`NYT_API_KEY`=The New York Times API Key.
+
+`MONGO_URI`=MongoDB Connection String.
+
+`DEV_EMAIL`=My Personal Email Address to Receive Feedback From Users
 
 ## License
 This project is licensed under the MIT License. Feel free to contribute to this project by opening issues or pull requests.

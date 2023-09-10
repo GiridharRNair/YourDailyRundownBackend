@@ -122,3 +122,4 @@ warcio==1.7.4
 Werkzeug==2.3.6
 yarg==0.1.9
 zope.interface==6.0
+shortuuid~=1.0.11

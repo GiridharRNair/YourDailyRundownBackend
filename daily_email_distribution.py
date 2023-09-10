@@ -18,6 +18,16 @@ CATEGORY_MAPPING = {
     "us": "U.S."
 }
 
+EMAIL_CLOSER = (
+    """
+    <p>Interested in customizing your experience? Click here to update your preferences and name: 
+    <a href='https://giridharrnair.github.io/YourDailyRundown/{}/'>Update Preferences</a>. 
+    Rest assured, you won't receive duplicate emails, and all your changes will be seamlessly recorded.</p>
+    
+    <a href='https://yourdailyrundown.azurewebsites.net/{}/unsubscribe'>Want to unsubscribe?</a>
+    """
+)
+
 
 def email_subscribers():
     """
@@ -25,13 +35,12 @@ def email_subscribers():
     """
     summarized_articles = NewsSummarizer().get_summarized_news()
     for subscriber in get_subscribers():
-        recipent = subscriber['email']
-        email_body = build_email(recipent,
+        email_body = build_email(subscriber['uuid'],
                                  subscriber['first_name'],
                                  subscriber['last_name'],
-                                 subscriber['category'],
+                                 subscriber['categories'],
                                  summarized_articles)
-        send_email(recipent, email_body)
+        send_email(subscriber['email'], email_body)
 
 
 def get_subscribers():
@@ -47,18 +56,19 @@ def get_subscribers():
             'first_name': user['first_name'],
             'last_name': user['last_name'],
             'email': user['email'],
-            'category': user['category']
+            'categories': user['categories'],
+            'uuid': user['uuid']
         }
         for user in users_collection.find({'validated': 'true'})
     ]
 
 
-def build_email(email, first_name, last_name, categories, articles):
+def build_email(uuid, first_name, last_name, categories, articles):
     """
     Build the email content with summarized news articles for the specified categories.
 
-    :param email: The recipient's email address.
-    :type email: str
+    :param uuid: Unique identifier for each user in the database
+    :type uuid: str
     :param first_name: The recipient's first name.
     :type first_name: str
     :param last_name: The recipient's last name.
@@ -77,13 +87,7 @@ def build_email(email, first_name, last_name, categories, articles):
         email_body += f"<h2>{formatted_category.title()}</h2>\n\n"
         for article in articles.get(category, []):
             email_body += f'<a href="{article["url"]}">{article["title"]}</a><br/>{article["content"]}<br/><br/>'
-    email_body += f"<a href='https://yourdailyrundown.azurewebsites.net/{email}/unsubscribe'>Want to unsubscribe?</a>"
-    email_body += (
-        "<br/><br/>Want to change your preferences? "
-        "Just <a href='https://giridharrnair.github.io/YourDailyRundown/'>re-register for our newsletter</a>. "
-        "Don't worry about duplicate emails – we've got that covered, and all your changes will be "
-        "recorded seamlessly.</p>"
-    )
+    email_body += EMAIL_CLOSER.format(uuid)
     return email_body
 
 

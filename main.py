@@ -44,8 +44,8 @@ def register_user():
             return jsonify({"error": "Invalid JSON data"}), 400
 
         email = data["email"].lower()
-        first_name = data["firstName"]
-        last_name = data["lastName"]
+        first_name = data["firstName"].strip().title()
+        last_name = data["lastName"].strip().title()
         categories = [item['value'] for item in data["category"]]
 
         if not email or not first_name or not last_name or not categories:
@@ -90,8 +90,8 @@ def update_existing_user():
             return jsonify({"error": "Invalid JSON data"}), 400
 
         uuid = data['uuid']
-        first_name = data['firstName']
-        last_name = data['lastName']
+        first_name = data['firstName'].strip().title()
+        last_name = data['lastName'].strip().title()
         new_categories = [item['value'] for item in data["category"]]
 
         if not uuid or not first_name or not last_name or not new_categories:
@@ -206,10 +206,11 @@ def unsubscribe():
             send_email(
                 'Your Daily Rundown - Unsubscription Confirmation', user['email'], unsubscription_email_content
             )
-            user_feedback_email_content = user_feedback_email_template.format(
-                user['first_name'], user['last_name'], user['email'], data['feedback']
-            )
-            send_email('YourDailyRundown - Feedback', os.environ.get('DEV_EMAIL'), user_feedback_email_content)
+            if data["feedback"]:
+                user_feedback_email_content = user_feedback_email_template.format(
+                    user['first_name'], user['last_name'], user['email'], data['feedback']
+                )
+                send_email('YourDailyRundown - Feedback', os.environ.get('DEV_EMAIL'), user_feedback_email_content)
             return jsonify({'message': f'{first_name} is successfully unsubscribed'}), 200
         else:
             return jsonify({"error": "User does not exist"}), 404

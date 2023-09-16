@@ -4,15 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Format first/last name, send feedback only if it exists">
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Format emails">
+      <change afterPath="$PROJECT_DIR$/public/ArtsCategoryExample.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/email_templates/daily_email_template.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/email_templates/registration_email.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/email_templates/updated_preferences_email.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/email_templates/user_unsubscribe_email.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/email_templates/validate_email.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/daily_email_distribution.py" beforeDir="false" afterPath="$PROJECT_DIR$/daily_email_distribution.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/HealthCategoryExample.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/feedback_email.txt" beforeDir="false" afterPath="$PROJECT_DIR$/templates/email_templates/feedback_email.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/registration_email.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/unsubscribe_page.html" beforeDir="false" />
@@ -175,7 +178,7 @@
       <workItem from="1693371929751" duration="14561000" />
       <workItem from="1693446778728" duration="35936000" />
       <workItem from="1694298307955" duration="32396000" />
-      <workItem from="1694625482491" duration="20298000" />
+      <workItem from="1694625482491" duration="20864000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1690788492141</created>
@@ -513,7 +516,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694653694128</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Format emails">
+      <created>1694844292011</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1694844292011</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -532,7 +542,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Improve newsletter emails" />
     <MESSAGE value="READMD.md update" />
     <MESSAGE value="Used a different News API" />
     <MESSAGE value="Removed unnecessary print statements" />
@@ -557,7 +566,8 @@
     <MESSAGE value="Transitioned to Vercel instead of GitHub pages" />
     <MESSAGE value="Refactor endpoint" />
     <MESSAGE value="Format first/last name, send feedback only if it exists" />
-    <option name="LAST_COMMIT_MESSAGE" value="Format first/last name, send feedback only if it exists" />
+    <MESSAGE value="Format emails" />
+    <option name="LAST_COMMIT_MESSAGE" value="Format emails" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

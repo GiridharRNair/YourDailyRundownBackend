@@ -11,7 +11,7 @@ Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown
 
 **Example email of the health category**:
 
-<img alt="AutomobileCategoryExample" src="public/HealthCategoryExample.png" />
+<img alt="AutomobileCategoryExample" src="public/ArtsCategoryExample.png" />
 
 ## Architecture
 

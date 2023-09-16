@@ -1,6 +1,7 @@
 import os
 import shortuuid
 from flask_cors import CORS
+from jinja2 import Template
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from sendgrid import SendGridAPIClient
@@ -18,15 +19,15 @@ category_mapping = {
     "Us": "U.S."
 }
 
-with open('templates/registration_email.txt', 'r') as file:
+with open('templates/email_templates/registration_email.html', 'r') as file:
     registration_email_template = file.read()
-with open('templates/validate_email.txt', 'r') as file:
+with open('templates/email_templates/validate_email.html', 'r') as file:
     validate_user_email_template = file.read()
-with open('templates/updated_preferences_email.txt', 'r') as file:
+with open('templates/email_templates/updated_preferences_email.html', 'r') as file:
     updated_preferences_email_template = file.read()
-with open('templates/user_unsubscribe_email.txt', 'r') as file:
+with open('templates/email_templates/user_unsubscribe_email.html', 'r') as file:
     user_unsubscribe_email_template = file.read()
-with open('templates/feedback_email.txt', 'r') as file:
+with open('templates/email_templates/feedback_email.txt', 'r') as file:
     user_feedback_email_template = file.read()
 
 
@@ -66,7 +67,11 @@ def register_user():
                 }
             }
             users_collection.update_one({'email': email}, user_update, upsert=True)
-            validate_user_email_content = validate_user_email_template.format(first_name, last_name, uuid)
+            validate_user_email_content = Template(validate_user_email_template).render({
+                'first_name': first_name,
+                'last_name': last_name,
+                'uuid': uuid
+            })
             send_email('Your Daily Rundown - One More Step!', email, validate_user_email_content)
             return jsonify({"message": "Check your email!"}), 201
         else:
@@ -109,9 +114,12 @@ def update_existing_user():
                     }
                 }
                 users_collection.update_one({'uuid': uuid}, user_update, upsert=True)
-                updated_preferences_email_content = updated_preferences_email_template.format(
-                    first_name, last_name, format_categories(new_categories), uuid
-                )
+                updated_preferences_email_content = Template(updated_preferences_email_template).render({
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'categories': format_categories(new_categories),
+                    'uuid': uuid
+                })
                 send_email(
                     'Your Daily Rundown - Preferences Updated!', user['email'], updated_preferences_email_content
                 )
@@ -168,19 +176,22 @@ def validate_user(uuid):
             if user['validated'] == 'false':
                 user_update = {'$set': {'validated': 'true'}}
                 users_collection.update_one({'uuid': uuid}, user_update, upsert=True)
-                registration_email_content = registration_email_template.format(
-                    user['first_name'], user['last_name'], format_categories(user['categories']), uuid
-                )
+                registration_email_content = Template(registration_email_template).render({
+                    'first_name': user['first_name'],
+                    'last_name': user['last_name'],
+                    'categories': format_categories(user['categories']),
+                    'uuid': uuid
+                })
                 send_email('Your Daily Rundown - Welcome!', user['email'], registration_email_content)
-                return render_template('validate_user_page.html',
+                return render_template('pages/validate_user_page.html',
                                        first_name=user['first_name'],
                                        last_name=user['last_name'])
             else:
-                return render_template('user_already_validated.html',
+                return render_template('pages/user_already_validated.html',
                                        first_name=user['first_name'],
                                        last_name=user['last_name'])
         else:
-            return render_template('user_not_found_page.html')
+            return render_template('pages/user_not_found_page.html')
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -202,7 +213,10 @@ def unsubscribe():
 
         if user:
             first_name = user['first_name']
-            unsubscription_email_content = user_unsubscribe_email_template.format(user['first_name'], user['last_name'])
+            unsubscription_email_content = Template(user_unsubscribe_email_template).render({
+                'first_name': first_name,
+                'last_name': user['last_name'],
+            })
             send_email(
                 'Your Daily Rundown - Unsubscription Confirmation', user['email'], unsubscription_email_content
             )
@@ -211,7 +225,7 @@ def unsubscribe():
                     user['first_name'], user['last_name'], user['email'], data['feedback']
                 )
                 send_email('YourDailyRundown - Feedback', os.environ.get('DEV_EMAIL'), user_feedback_email_content)
-            return jsonify({'message': f'{first_name} is successfully unsubscribed'}), 200
+            return jsonify({'message': f'{first_name} successfully unsubscribed'}), 200
         else:
             return jsonify({"error": "User does not exist"}), 404
     except Exception as e:

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsubscription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            background-color: rgb(49, 130, 206);
+            color: #ffffff;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Hey {{ first_name }} {{ last_name }},</p>
+
+        <h2>Your newsletter subscription has been successfully canceled</h2>
+
+        <p>We're sorry to see you go, but we've successfully unsubscribed you from our newsletter service based on your recent request.</p>
+
+        <p>If you ever change your mind and decide to re-subscribe in the future, you can do so by clicking the button below:</p>
+
+        <p><a class="button" href="https://your-daily-rundown.vercel.app/" style="color: #ffffff;">Re-subscribe</a></p>
+
+        <p>We want to thank you for being part of our community. If you have any feedback or suggestions for improvement, please don't hesitate to reach out.</p>
+
+        <p>Best regards,<br />Giridhar Nair<br />YourDailyRundown Developer</p>
+    </div>
+</body>
+</html>

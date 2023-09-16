@@ -1,5 +1,6 @@
 import os
 from datetime import date
+from jinja2 import Template
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from news_summarizer import NewsSummarizer
@@ -18,15 +19,8 @@ CATEGORY_MAPPING = {
     "us": "U.S."
 }
 
-EMAIL_CLOSER = (
-    """
-    <p>Interested in customizing your experience? Click here to update your preferences and name: 
-    <a href='https://your-daily-rundown.vercel.app/{}/'>Update Preferences</a>. 
-    Rest assured, you won't receive duplicate emails, and all your changes will be seamlessly recorded.</p>
-    
-    <a href='https://your-daily-rundown.vercel.app/{}/unsubscribe'>Want to unsubscribe?</a>
-    """
-)
+with open('templates/email_templates/daily_email_template.html', 'r') as file:
+    daily_email_template = file.read()
 
 
 def email_subscribers():
@@ -81,14 +75,18 @@ def build_email(uuid, first_name, last_name, categories, articles):
     :returns: The formatted email content.
     :rtype: str
     """
-    email_body = f"<p>Hey {first_name} {last_name}, here is YourDailyRundown!</p>"
+    content = []
     for category in categories:
         formatted_category = CATEGORY_MAPPING.get(category, category)
-        email_body += f"<h2>{formatted_category.title()}</h2>\n\n"
+        content.append(f"<h2>{formatted_category.title()}</h2>")
         for article in articles.get(category, []):
-            email_body += f'<a href="{article["url"]}">{article["title"]}</a><br/>{article["content"]}<br/><br/>'
-    email_body += EMAIL_CLOSER.format(uuid, uuid)
-    return email_body
+            content.append(f'<a href="{article["url"]}">{article["title"]}</a><br /><p>{article["content"]}</p>')
+    return Template(daily_email_template).render({
+        'first_name': first_name,
+        'last_name': last_name,
+        'content': '<br />'.join(content),
+        'uuid': uuid
+    })
 
 
 def send_email(recipent, email_body):

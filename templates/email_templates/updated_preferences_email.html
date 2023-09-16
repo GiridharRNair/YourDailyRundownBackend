@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preference Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            background-color: rgb(49, 130, 206);
+            color: #ffffff;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Hey {{ first_name }} {{ last_name }},</p>
+
+        <h2>Your preferences have been updated successfully!</h2>
+
+        <p>We wanted to let you know that we've successfully updated your newsletter preferences based on your recent request.</p>
+
+        <p>With our newsletter, you'll stay informed about the latest news and updates, all carefully curated and summarized to match your interest(s) in {{ categories }}.</p>
+
+        <p>If you wish to customize your experience further, you can easily update your preferences and personal information by clicking the button below:</p>
+
+        <p><a class="button" href="https://your-daily-rundown.vercel.app/{{ uuid }}/" style="color: #ffffff;">Update Preferences</a></p>
+
+        <p>We sincerely appreciate your valued membership in our community and your trust in us to keep you informed and engaged.</p>
+
+        <p>If, at any point, you wish to stop receiving our updates, you can simply click below:</p>
+
+        <p><a class="button" href='https://your-daily-rundown.vercel.app/{{ uuid }}/unsubscribe' style="color: #ffffff;">Unsubscribe</a></p>
+
+        <p>Best regards,<br />Giridhar Nair<br />YourDailyRundown Developer</p>
+    </div>
+</body>
+</html>

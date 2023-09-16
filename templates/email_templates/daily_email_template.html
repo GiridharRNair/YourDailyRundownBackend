@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YourDailyRundown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            background-color: rgb(49, 130, 206);
+            color: #ffffff;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .content-border {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>Hey {{ first_name }} {{ last_name }}, here is YourDailyRundown!</h3>
+
+    <div class="content-border">
+        {{ content }}
+    </div>
+
+    <p>Interested in customizing your experience? </p>
+
+    <p><a class="button" href="https://your-daily-rundown.vercel.app/{{ uuid }}/" style="color: #ffffff;">Update Preferences</a></p>
+
+    <p>We sincerely appreciate your valued membership in our community and your trust in us to keep you informed and engaged.</p>
+
+    <p><a class="button" href='https://your-daily-rundown.vercel.app/{{ uuid }}/unsubscribe' style="color: #ffffff;">Want to unsubscribe?</a></p>
+
+    <p>Best regards,<br />Giridhar Nair<br />YourDailyRundown Developer</p>
+</div>
+</body>
+</html>

@@ -11,7 +11,7 @@ load_dotenv()
 
 email_sender = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
 client = MongoClient(os.environ.get('MONGO_URI'))
-users_collection = client.users["test_users"]
+users_collection = client.users["users"]
 
 CATEGORY_MAPPING = {
     "realestate": "Real Estate",

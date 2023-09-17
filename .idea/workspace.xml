@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Added images to the daily emails">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/email_templates/daily_email_template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/email_templates/daily_email_template.html" afterDir="false" />
-    </list>
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Formatted emails to include images" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,13 +158,6 @@
       <workItem from="1693446778728" duration="35936000" />
       <workItem from="1694298307955" duration="32396000" />
       <workItem from="1694625482491" duration="39926000" />
-    </task>
-    <task id="LOCAL-00003" summary="CircleCI tests override">
-      <created>1690789890456</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1690789890456</updated>
     </task>
     <task id="LOCAL-00004" summary="CircleCI tests override">
       <created>1690790017181</created>
@@ -505,7 +495,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694932228570</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Formatted emails to include images">
+      <created>1694935032358</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1694935032358</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -524,7 +521,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Used a different News API" />
     <MESSAGE value="Removed unnecessary print statements" />
     <MESSAGE value="Added example email, better article content" />
     <MESSAGE value="Filtered bad articles" />
@@ -549,7 +545,8 @@
     <MESSAGE value="Format emails" />
     <MESSAGE value="Update README.md" />
     <MESSAGE value="Added images to the daily emails" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added images to the daily emails" />
+    <MESSAGE value="Formatted emails to include images" />
+    <option name="LAST_COMMIT_MESSAGE" value="Formatted emails to include images" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

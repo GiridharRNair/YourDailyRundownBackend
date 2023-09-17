@@ -4,8 +4,10 @@ from flask_cors import CORS
 from jinja2 import Template
 from dotenv import load_dotenv
 from pymongo import MongoClient
+from flask_limiter import Limiter
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from flask_limiter.util import get_remote_address
 from flask import Flask, request, jsonify, render_template
 
 load_dotenv()
@@ -18,6 +20,11 @@ category_mapping = {
     "Nyregion": "New York Region",
     "Us": "U.S."
 }
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["5 per minute"],
+)
 
 with open('templates/email_templates/registration_email.html', 'r') as file:
     registration_email_template = file.read()
@@ -230,6 +237,11 @@ def unsubscribe():
             return jsonify({"error": "User does not exist"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.errorhandler(429)
+def ratelimit_handler(e):
+    return jsonify({"error": str(e)}), 429
 
 
 def send_email(subject, recipient, email_content):

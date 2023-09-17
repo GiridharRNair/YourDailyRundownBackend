@@ -11,7 +11,7 @@ load_dotenv()
 
 email_sender = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
 client = MongoClient(os.environ.get('MONGO_URI'))
-users_collection = client.users["users"]
+users_collection = client.users["test_users"]
 
 CATEGORY_MAPPING = {
     "realestate": "Real Estate",
@@ -21,20 +21,8 @@ CATEGORY_MAPPING = {
 
 with open('templates/email_templates/daily_email_template.html', 'r') as file:
     daily_email_template = file.read()
-
-
-def email_subscribers():
-    """
-    Send summarized news articles to subscribers via email.
-    """
-    summarized_articles = NewsSummarizer().get_summarized_news()
-    for subscriber in get_subscribers():
-        email_body = build_email(subscriber['uuid'],
-                                 subscriber['first_name'],
-                                 subscriber['last_name'],
-                                 subscriber['categories'],
-                                 summarized_articles)
-        send_email(subscriber['email'], email_body)
+with open('templates/email_templates/article_template.txt', 'r') as file:
+    article_template = file.read()
 
 
 def get_subscribers():
@@ -44,7 +32,6 @@ def get_subscribers():
     :returns: A list of dictionaries containing subscriber details.
     :rtype: list
     """
-    users_collection.delete_many({'validated': 'false'})
     return [
         {
             'first_name': user['first_name'],
@@ -80,7 +67,12 @@ def build_email(uuid, first_name, last_name, categories, articles):
         formatted_category = CATEGORY_MAPPING.get(category, category)
         content.append(f"<h2>{formatted_category.title()}</h2>")
         for article in articles.get(category, []):
-            content.append(f'<a href="{article["url"]}">{article["title"]}</a><br /><p>{article["content"]}</p>')
+            content.append(Template(article_template).render({
+                'image': article["image"],
+                'url': article["url"],
+                'title': article["title"],
+                'content': article["content"],
+            }))
     return Template(daily_email_template).render({
         'first_name': first_name,
         'last_name': last_name,
@@ -100,7 +92,7 @@ def send_email(recipent, email_body):
     """
     news_letter = Mail(from_email='yourdailyrundown@gmail.com',
                        to_emails=recipent,
-                       subject='Your Daily Rundown - ' + str(date.today()),
+                       subject=f'Your Daily Rundown - {str(date.today())}',
                        html_content=email_body)
     try:
         email_sender.send(news_letter)
@@ -109,4 +101,15 @@ def send_email(recipent, email_body):
 
 
 if __name__ == "__main__":
-    email_subscribers()
+    """
+    Deletes all the invalidated users from the database, and runs the daily email distribution script.
+    """
+    users_collection.delete_many({'validated': 'false'})
+    summarized_articles = NewsSummarizer().get_summarized_news()
+    for subscriber in get_subscribers():
+        email_content = build_email(subscriber['uuid'],
+                                    subscriber['first_name'],
+                                    subscriber['last_name'],
+                                    subscriber['categories'],
+                                    summarized_articles)
+        send_email(subscriber['email'], email_content)

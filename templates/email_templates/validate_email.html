@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validation</title>
+    <title>Validate</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,7 +29,7 @@
             display: inline-block;
             background-color: rgb(49, 130, 206);
             color: #ffffff;
-            padding: 5px 10px;
+            padding: 10px 15px;
             text-decoration: none;
             border-radius: 5px;
         }
@@ -37,19 +37,17 @@
 </head>
 <body>
 <div class="container">
+    <h1>Welcome to YourDailyRundown!</h1>
+
     <p>Hello {{ first_name }} {{ last_name }},</p>
 
-    <h2>Welcome to YourDailyRundown!</h2>
+    <p>We're thrilled to have you as a part of the YourDailyRundown community. Before we start sending you the latest news and updates, we just need to verify your email.</p>
 
-    <p>We're excited to have you on board! But before we start sending you the latest news and updates, we just need to make sure your email is valid.</p>
+    <a class="button" href='https://yourdailyrundown.azurewebsites.net/{{ uuid }}/validate' style="color: #ffffff;">Verify Your Email</a>
 
-    <p><a class="button" href='https://yourdailyrundown.azurewebsites.net/{{ uuid }}/validate' style="color: #ffffff;">Validate Your Email</a></p>
+    <p>If you received this email by mistake or have changed your mind, you can simply ignore this email.</p>
 
-    <p>If you received this email by mistake or changed your mind, no problem at all! You can easily opt out by clicking the button below:</p>
-
-    <p><a class="button" href='https://your-daily-rundown.vercel.app/{{ uuid }}/unsubscribe' style="color: #ffffff;">Unsubscribe</a></p>
-
-    <p>If you have any questions or need assistance, feel free to reach out to us. We're here to help!</p>
+    <p>If you have any questions or need assistance, please don't hesitate to reply to this email. We're here to help!</p>
 
     <p>Best regards,<br />Giridhar Nair<br />YourDailyRundown Developer</p>
 </div>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,11 +39,25 @@
             border-bottom: 1px solid #ccc;
             padding: 20px 0;
         }
+        .crop {
+            width: 600px;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .crop img {
+            width: 600px;
+            height: 300px;
+            margin: 0 auto;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h3>Hey {{ first_name }} {{ last_name }}, here is YourDailyRundown!</h3>
+    <p>Hey {{ first_name }} {{ last_name }}, here is YourDailyRundown!</p>
 
     <div class="content-border">
         {{ content }}

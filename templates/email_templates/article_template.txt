@@ -1,0 +1,10 @@
+<div class="crop">
+    <img alt="ArticleImage" src="{{ image }}" width="600" height="400" />
+</div>
+<br />
+
+<a href="{{ url }}">{{ title }}</a>
+
+<br />
+
+<p>{{ content }}</p>

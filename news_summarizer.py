@@ -14,7 +14,6 @@ API_REQUEST_INTERVAL = 10
 palm.configure(api_key=os.getenv('AI_API_KEY'))
 nyt_api_key = os.getenv('NYT_API_KEY')
 
-
 DEFAULTS = {
     'model': 'models/text-bison-001',
     'temperature': 0.6,
@@ -59,10 +58,18 @@ class NewsSummarizer:
             for article_data in articles_data:
                 if valid_articles_count >= ARTICLE_COUNT:
                     break
-                scraped_article = extract_article_details(article_data.get("url"), article_data.get("title"), category)
-                if scraped_article:
+
+                scraped_content = scrape_content(article_data.get("url"), category)
+                if scraped_content:
                     valid_articles_count += 1
-                    self.categories_dict[category].append(scraped_article)
+                    article_info = {
+                        "image": article_data.get("multimedia")[0].get("url"),
+                        "title": article_data.get("title"),
+                        "url": article_data.get("url"),
+                        "content": scraped_content
+                    }
+                    self.categories_dict[category].append(article_info)
+
                 time.sleep(API_REQUEST_INTERVAL)
 
     def get_summarized_news(self):
@@ -76,28 +83,25 @@ class NewsSummarizer:
         return self.categories_dict
 
 
-def extract_article_details(article_url, article_title, category):
+def scrape_content(article_url, category):
     """
-    Extract article details, summarize the content, and return a dictionary with relevant information.
+    Extract and summarize article content from the article url.
 
+    :param category: The genre/category of which the article is in.
+    :param category: str
     :param article_url: URL of the article.
     :type article_url: str
-    :param article_title: Title of the article.
-    :type article_title: str
-    :param category: Category of the article.
-    :type category: str
 
-    :return: dict, A dictionary containing title, URL, and summarized content of the article.
-    :rtype: dict
+    :return: Summarized content of the article as a string, or None if summarization fails.
+    :rtype: str | None
     """
     try:
         article = NewsPlease.from_url(article_url)
-        content = article.maintext
-        summarized_content = summarize_article(content)
-        if summarized_content is not None:
-            return {"title": article_title, "url": article_url, "content": summarized_content}
+        summarized_content = summarize_article(article.maintext)
+        return summarized_content
     except Exception as e:
-        print(f"Error summarizing article in {category.title()}: {str(e)}")
+        print(f"Error summarizing article in {category}: {str(e)}")
+    return None
 
 
 def fetch_articles_for_category(category):
@@ -115,10 +119,10 @@ def fetch_articles_for_category(category):
         if response.status_code == 200:
             return response.json().get('results', [])
         elif response.status_code == 504:
-            print(f"502 Bad Gateway Error - Retry attempt {attempt + 1}/{RETRY_ATTEMPTS}")
+            print(f"Retry attempt {attempt + 1}/{RETRY_ATTEMPTS} - 502 Bad Gateway Error")
             time.sleep(API_REQUEST_INTERVAL)
         else:
-            print(f"Error fetching articles for {category}: {response.status_code}")
+            print(f"Retry attempt {attempt + 1}/{RETRY_ATTEMPTS} - {response.status_code} Error")
             return []
 
     print(f"Unable to fetch articles for {category} after {RETRY_ATTEMPTS} retry attempts.")
@@ -127,7 +131,7 @@ def fetch_articles_for_category(category):
 
 def summarize_article(content):
     """
-    Summarize the provided article content using the generative AI model.
+    Summarize the provided article content using the Google PaLM AI model.
 
     :param content: The content of the article to be summarized.
     :type content: str

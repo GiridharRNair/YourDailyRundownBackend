@@ -4,14 +4,12 @@ Welcome to the YourDailyRundown Backend repository! This backend serves as the c
 
 ## Overview
 
-YourDailyRundown is a service that simplifies the consumption of news articles. It aggregates news articles from various categories and delivers summarized versions to users via email. The backend handles critical tasks such as user registration and validation, article summarization using Google's PaLM AI model, and email distribution. News articles are sourced from the New York Times API and extracted using [News-Please](https://github.com/fhamborg/news-please).
+YourDailyRundown simplifies news consumption by aggregating articles from different categories and delivering concise versions via email. Our backend manages user registration, validation, updates, and unsubscription. We leverage Google's PaLM 2 AI model for article summarization and rely on Twilio SendGrid for email distribution. Our news sources include the New York Times API and scraping via [News-Please](https://github.com/fhamborg/news-please).
 
 Live Demo: https://your-daily-rundown.vercel.app/ </br>
 Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown 
 
-**Example email of the health category**:
-
-<img alt="AutomobileCategoryExample" src="public/ArtsCategoryExample.png" />
+<img src="public/DemoGif.gif" alt="Screenshot">
 
 ## Architecture
 
@@ -20,38 +18,38 @@ The backend of YourDailyRundown is a Python-based application built using the Fl
 1. **User Registration**: Users can register with their first name, last name, email, and select news categories they are interested in. This information is stored in a MongoDB database after user validation.
 
 
-2. **News Article Summarization**: To provide users with a concise overview of the day's top headlines, the backend retrieves news articles from the New York Times API across various categories. It then leverages Google's PaLM AI to generate accurate and informative article summaries. This summarization process helps users quickly grasp the key points of each article.
+2. **News Article Summarization**: To provide users with a concise overview of the day's top headlines, the backend retrieves news articles from the New York Times API across 20 categories. It then leverages Google's PaLM 2 AI to generate accurate and informative article summaries. This summarization process helps users quickly grasp the key points of each article.
 
 
-3. **Email Delivery**: YourDailyRundown ensures that users stay informed by delivering the summarized news articles, from the previous step, to their email inbox. Articles are sent out daily at 8 AM CST (13:00 UTC) based on the user's selected preferences and interests.
+3. **Email Delivery**: Send subscribers custom emails, daily at 8 AM CST (13:00 UTC), by retrieving subscriber data, summarizing news articles based on their selected categories (from the previous step), creates HTML email content, and utilizes the SendGrid service for email delivery. 
 
 
-4. **Unsubscribe**: For users who wish to discontinue the service, YourDailyRundown offers a straightforward unsubscribe option. By clicking the unsubscribe link provided in the daily email, users can easily opt out of receiving further newsletters. The backend ensures that their information is promptly removed from the database.
+4. **Unsubscribe**: For users who wish to discontinue the service, YourDailyRundown offers a straightforward unsubscribe option. By clicking the unsubscribe button provided in the daily email, users can easily opt out of receiving further newsletters. The backend ensures that their information is promptly removed from the database.
 
 ## Components
 
 ### `main.py`
-`main.py` is the main Flask application responsible for handling user registration, validation, and unsubscription. It utilizes Flask to create API endpoints and interacts with a MongoDB database to store user information. Here's an overview of its API endpoints:
+`main.py` is the main Flask application responsible for handling user registration, validation, updates, and unsubscription. It utilizes Flask to create API endpoints and interacts with a MongoDB database to store user information. Here's an overview of its API endpoints:
 
-* `/register_user`: Registers a new user based on JSON data, inserts their information into a MongoDB database, and sends an email for email validation.
-
-
-* `/update_user_preferences`: Allows existing users to update their preferences using JSON data, updating their information in the database and sending a confirmation email.
+* `/register_user`: Registers a new user by accepting JSON data containing user details. It checks for missing fields, duplicates, and sends a validation email if successful.
 
 
-* `/<uuid>/get_user_info`: Retrieves user information, including first name, last name, and categories, and whether they're validated or not based on their UUID.
+* `/update_user_preferences`: Allows existing users to update their preferences by providing JSON data with their UUID. It checks if the user is validated and sends a confirmation email.
 
 
-* `/<uuid>/validate`: Validates a user's email address, updates their validation status, sends a welcome email, and renders a validation success confirmation page.
+* `/<uuid>/get_user_info`: Retrieves user information based on their UUID, including first name, last name, categories, and validation status.
 
 
-* `/unsubscribe`: Unsubscribes users from email notifications, sends their feedback to the developer, and confirms the unsubscription via email.
+* `/<uuid>/validate`: Validates a user's email address using their UUID, updates their validation status, and sends a welcome email upon successful validation.
+
+
+* `/unsubscribe`: Unsubscribes users from email notifications and sends feedback to the developer. It confirms the unsubscription via email.
 
 ### `news_summarizer.py`
-`news_summarizer.py` is responsible for summarizing, using Google's PaLM AI, news articles from various categories sourced from the New York Times API, scraped using [News-Please](https://github.com/fhamborg/news-please).
+Summarizes news articles across diverse categories by leveraging the New York Times API to source top articles, employing the [News-Please](https://github.com/fhamborg/news-please) library and a Google AI model (PaLM) for content scraping and summarization. Summarized articles are organized in a dictionary, categorized into 20 news categories. The code offers configuration settings, adeptly handles API request errors, and incorporates retry mechanisms for managing API request failures. Key parameters, such as the number of articles to fetch and retry attempts, are customizable constants situated at the script's outset. Furthermore, it adeptly manages API keys and environmental variables through the dotenv library.
 
 ### `daily_email_distribution.py`
-`daily_email_distribution.py` sends the summarized news articles from `news_summarizer.py` to subscribers via email. It retrieves the list of validated subscribers from the MongoDB collection and builds the email content with summarized news articles for the specified categories.
+This Python script loads environment variables, connects to a MongoDB database, and sends daily personalized email newsletters to validated subscribers. It retrieves subscriber data, summarizes news articles based on their selected categories (via `news_summarizer.py`), creates HTML email content, and utilizes the SendGrid service for email delivery. Invalidated users are initially removed from the database, followed by the creation and dispatch of tailored emails containing summarized news articles to each subscriber's email address.
 
 ## YAML Files
 
@@ -64,7 +62,7 @@ This YAML file defines a GitHub Actions workflow for running the daily_email_dis
 ## Environment Variables
 To run the YourDailyRundown Backend, you'll need to set the following environment variables:
 
-`AI_API_KEY`= Your Google PaLM AI API Key.
+`AI_API_KEY`= Your Google PaLM AI 2 API Key.
 
 `SENDGRID_API_KEY`=Your SendGrid API Key for Email Distribution.
 

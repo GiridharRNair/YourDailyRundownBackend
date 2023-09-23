@@ -3,9 +3,9 @@ from datetime import date
 from jinja2 import Template
 from dotenv import load_dotenv
 from pymongo import MongoClient
-from news_summarizer import NewsSummarizer
 from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
+from news_summarizer import NewsSummarizer
 
 load_dotenv()
 

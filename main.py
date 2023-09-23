@@ -11,19 +11,24 @@ from flask_limiter.util import get_remote_address
 from flask import Flask, request, jsonify, render_template
 
 load_dotenv()
-client = MongoClient(os.environ.get('MONGO_URI'))
-users_collection = client.users["users"]
 app = Flask(__name__, template_folder="templates")
 CORS(app)
-category_mapping = {
+
+client = MongoClient(os.environ.get('MONGO_URI'))
+users_collection = client.users["users"]
+news_collection = client.users["news"]
+
+CATEGORY_MAPPING = {
     "Realestate": "Real Estate",
     "Nyregion": "New York Region",
     "Us": "U.S."
 }
+
 limiter = Limiter(
     get_remote_address,
     app=app,
     default_limits=["5 per minute"],
+    storage_uri="memory://",
 )
 
 with open('templates/email_templates/registration_email.html', 'r') as file:
@@ -36,6 +41,8 @@ with open('templates/email_templates/user_unsubscribe_email.html', 'r') as file:
     user_unsubscribe_email_template = file.read()
 with open('templates/email_templates/feedback_email.txt', 'r') as file:
     user_feedback_email_template = file.read()
+with open('templates/email_templates/article_template.txt', 'r') as file:
+    article_template = file.read()
 
 
 @app.route("/register_user", methods=["POST"])
@@ -183,12 +190,26 @@ def validate_user(uuid):
             if user['validated'] == 'false':
                 user_update = {'$set': {'validated': 'true'}}
                 users_collection.update_one({'uuid': uuid}, user_update, upsert=True)
+
+                content = []
+                for category in user['categories']:
+                    formatted_category = CATEGORY_MAPPING.get(category, category)
+                    content.append(f"<h2>{formatted_category.title()}</h2>")
+                    for article in list(news_collection.find({"category": category})):
+                        content.append(Template(article_template).render({
+                            'image': article["image"],
+                            'url': article["url"],
+                            'title': article["title"],
+                            'content': article["content"],
+                        }))
+
                 registration_email_content = Template(registration_email_template).render({
                     'first_name': user['first_name'],
                     'last_name': user['last_name'],
-                    'categories': format_categories(user['categories']),
+                    'content': '<br />'.join(content),
                     'uuid': uuid
                 })
+
                 send_email('Your Daily Rundown - Welcome!', user['email'], registration_email_content)
                 return render_template('pages/validate_user_page.html',
                                        first_name=user['first_name'],
@@ -276,7 +297,7 @@ def format_categories(categories):
     :returns: Formatted string of categories
     :rtype: str
     """
-    formatted_categories = [category_mapping.get(category.title(), category.title()) for category in categories]
+    formatted_categories = [CATEGORY_MAPPING.get(category.title(), category.title()) for category in categories]
     if len(formatted_categories) > 1:
         return ', '.join(formatted_categories[:-1]) + ' and ' + formatted_categories[-1]
     elif formatted_categories:

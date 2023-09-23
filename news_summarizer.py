@@ -2,8 +2,10 @@ import os
 import time
 import requests
 from dotenv import load_dotenv
-import google.generativeai as palm
+from pymongo import MongoClient
 from newsplease import NewsPlease
+import google.generativeai as palm
+from the_athletic_parser import TheAthleticParser
 
 load_dotenv()
 
@@ -13,6 +15,9 @@ API_REQUEST_INTERVAL = 10
 
 palm.configure(api_key=os.getenv('AI_API_KEY'))
 nyt_api_key = os.getenv('NYT_API_KEY')
+
+client = MongoClient(os.environ.get('MONGO_URI'))
+news_collection = client.users["news"]
 
 DEFAULTS = {
     'model': 'models/text-bison-001',
@@ -53,21 +58,29 @@ class NewsSummarizer:
         Retrieve top headlines for each category and store them in the categories_dict dictionary.
         """
         for category in self.categories:
+            prev_articles = [document["title"] for document in news_collection.find({"category": "arts"})]
+            news_collection.delete_many({"category": category})
             articles_data = fetch_articles_for_category(category)
             valid_articles_count = 0
             for article_data in articles_data:
                 if valid_articles_count >= ARTICLE_COUNT:
                     break
 
-                scraped_content = scrape_content(article_data.get("url"), category)
-                if scraped_content:
+                summarized_content = scrape_content(article_data.get("url"), category)
+                image = article_data.get("multimedia")[0].get("url")
+                title = article_data.get("title")
+                url = article_data.get("url")
+
+                if all([summarized_content, image, title, url, title not in prev_articles]):
                     valid_articles_count += 1
                     article_info = {
-                        "image": article_data.get("multimedia")[0].get("url"),
-                        "title": article_data.get("title"),
-                        "url": article_data.get("url"),
-                        "content": scraped_content
+                        "category": category,
+                        "image": image,
+                        "title": title,
+                        "url": url,
+                        "content": summarized_content
                     }
+                    news_collection.insert_one(article_info)
                     self.categories_dict[category].append(article_info)
 
                 time.sleep(API_REQUEST_INTERVAL)
@@ -88,19 +101,20 @@ def scrape_content(article_url, category):
     Extract and summarize article content from the article url.
 
     :param category: The genre/category of which the article is in.
-    :param category: str
+    :type category: str
     :param article_url: URL of the article.
     :type article_url: str
 
     :return: Summarized content of the article as a string, or None if summarization fails.
     :rtype: str | None
     """
-    try:
-        article = NewsPlease.from_url(article_url)
-        summarized_content = summarize_article(article.maintext)
-        return summarized_content
-    except Exception as e:
-        print(f"Error summarizing article in {category}: {str(e)}")
+    for attempt in range(RETRY_ATTEMPTS):
+        try:
+            article = NewsPlease.from_url(article_url)
+            summarized_content = summarize_article(article.maintext, category)
+            return summarized_content
+        except Exception as e:
+            print(f"Error scraping article in {category}: {str(e)} {attempt + 1} / {RETRY_ATTEMPTS}")
     return None
 
 
@@ -115,30 +129,35 @@ def fetch_articles_for_category(category):
     :rtype: list
     """
     for attempt in range(RETRY_ATTEMPTS):
-        response = requests.get(f'https://api.nytimes.com/svc/topstories/v2/{category}.json?api-key={nyt_api_key}')
-        if response.status_code == 200:
-            return response.json().get('results', [])
-        elif response.status_code == 504:
-            print(f"Retry attempt {attempt + 1}/{RETRY_ATTEMPTS} - 502 Bad Gateway Error")
-            time.sleep(API_REQUEST_INTERVAL)
-        else:
-            print(f"Retry attempt {attempt + 1}/{RETRY_ATTEMPTS} - {response.status_code} Error")
-            return []
-
-    print(f"Unable to fetch articles for {category} after {RETRY_ATTEMPTS} retry attempts.")
+        try:
+            if category != 'sports':
+                endpoint = f'https://api.nytimes.com/svc/topstories/v2/{category}.json?api-key={nyt_api_key}'
+                response = requests.get(endpoint)
+                return response.json().get('results', [])
+            else:
+                return TheAthleticParser().get_articles()
+        except Exception as e:
+            print(f"Error fetching articles for {category}: {str(e)} ({attempt + 1} / {RETRY_ATTEMPTS})")
     return []
 
 
-def summarize_article(content):
+def summarize_article(content, category):
     """
     Summarize the provided article content using the Google PaLM AI model.
 
+    :param category: The category of which the article is in.
+    :type category: str
     :param content: The content of the article to be summarized.
     :type content: str
 
     :return: str, The summarized article text.
     :rtype: str
     """
-    prompt = f"Summarize this news article in a comprehensive paragraph, without using bullet points:{content}"
-    response = palm.generate_text(**DEFAULTS, prompt=prompt)
-    return response.result if response is not None else ""
+    for attempt in range(RETRY_ATTEMPTS):
+        try:
+            prompt = f"Summarize this news article in a comprehensive paragraph, without using bullet points:{content}"
+            response = palm.generate_text(**DEFAULTS, prompt=prompt)
+            return response.result if response is not None else ""
+        except Exception as e:
+            print(f"Error occurred while summarizing the article {category}: {str(e)} ({attempt + 1} / {RETRY_ATTEMPTS})")
+    return ""

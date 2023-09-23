@@ -2,7 +2,7 @@ name: Run daily_email_distribution.py
 
 on:
   schedule:
-    - cron: '00 13 * * *' # At 8:00 AM CST (13:00 UTC) every day
+    - cron: '30 12 * * *' # At 8:00 AM CST (13:00 UTC) every day
 
 jobs:
   build:

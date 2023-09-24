@@ -19,9 +19,9 @@ users_collection = client.users["users"]
 news_collection = client.users["news"]
 
 CATEGORY_MAPPING = {
-    "Realestate": "Real Estate",
-    "Nyregion": "New York Region",
-    "Us": "U.S."
+    "realestate": "Real Estate",
+    "nyregion": "New York Region",
+    "us": "U.S."
 }
 
 limiter = Limiter(
@@ -206,7 +206,7 @@ def validate_user(uuid):
                 registration_email_content = Template(registration_email_template).render({
                     'first_name': user['first_name'],
                     'last_name': user['last_name'],
-                    'content': '<br />'.join(content),
+                    'content': ''.join(content),
                     'uuid': uuid
                 })
 

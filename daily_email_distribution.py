@@ -76,7 +76,7 @@ def build_email(uuid, first_name, last_name, categories, articles):
     return Template(daily_email_template).render({
         'first_name': first_name,
         'last_name': last_name,
-        'content': '<br />'.join(content),
+        'content': ''.join(content),
         'uuid': uuid
     })
 

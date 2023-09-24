@@ -67,7 +67,7 @@ class NewsSummarizer:
                     break
 
                 summarized_content = scrape_content(article_data.get("url"), category)
-                image = article_data.get("multimedia")[0].get("url")
+                image = article_data.get("multimedia")
                 title = article_data.get("title")
                 url = article_data.get("url")
 
@@ -75,7 +75,7 @@ class NewsSummarizer:
                     valid_articles_count += 1
                     article_info = {
                         "category": category,
-                        "image": image,
+                        "image": image[0].get("url"),
                         "title": title,
                         "url": url,
                         "content": summarized_content
@@ -137,7 +137,7 @@ def fetch_articles_for_category(category):
             else:
                 return TheAthleticParser().get_articles()
         except Exception as e:
-            print(f"Error fetching articles for {category}: {str(e)} ({attempt + 1} / {RETRY_ATTEMPTS})")
+            print(f"Error fetching articles for {category}: {str(e)} {attempt + 1} / {RETRY_ATTEMPTS}")
     return []
 
 
@@ -159,5 +159,5 @@ def summarize_article(content, category):
             response = palm.generate_text(**DEFAULTS, prompt=prompt)
             return response.result if response is not None else ""
         except Exception as e:
-            print(f"Error occurred while summarizing the article {category}: {str(e)} ({attempt + 1} / {RETRY_ATTEMPTS})")
+            print(f"Error occurred while summarizing the article {category}: {str(e)} {attempt + 1} / {RETRY_ATTEMPTS}")
     return ""

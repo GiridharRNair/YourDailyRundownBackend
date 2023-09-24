@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,6 +34,24 @@
             text-decoration: none;
             border-radius: 5px;
         }
+        .content-border {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        .crop {
+            width: 600px;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .crop img {
+            width: 600px;
+            height: 300px;
+            margin: 0 auto;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -41,21 +60,19 @@
 
         <h2>Your preferences have been updated successfully!</h2>
 
-        <p>We wanted to let you know that we've successfully updated your newsletter preferences based on your recent request.</p>
+        <p>We've updated your newsletter preferences as requested, delivering a tailored YourDailyRundown based on your interests. Enjoy the latest curated news just for you.</p>
 
-        <p>With our newsletter, you'll stay informed about the latest news and updates, all carefully curated and summarized to match your interest(s) in {{ categories }}.</p>
+        <div class="content-border">
+            {{ content }}
+        </div>
 
-        <p>If you wish to customize your experience further, you can easily update your preferences and personal information by clicking the button below:</p>
+        <p>Interested in customizing your experience? </p>
 
         <p><a class="button" href="https://your-daily-rundown.vercel.app/{{ uuid }}/" style="color: #ffffff;">Update Preferences</a></p>
 
-        <p>We sincerely appreciate your valued membership in our community and your trust in us to keep you informed and engaged.</p>
-
         <p>If you have any questions or need assistance, please don't hesitate to reply to this email or contact us at <a href="mailto:YourDailyRundown@gmail.com">YourDailyRundown@gmail.com</a>. We're here to help!</p>
 
-        <p>If, at any point, you wish to stop receiving our updates, you can simply click below:</p>
-
-        <p><a class="button" href='https://your-daily-rundown.vercel.app/{{ uuid }}/unsubscribe' style="color: #ffffff;">Unsubscribe</a></p>
+        <p><a class="button" href='https://your-daily-rundown.vercel.app/{{ uuid }}/unsubscribe' style="color: #ffffff;">Want to unsubscribe?</a></p>
 
         <p>Best regards,<br />Giridhar Nair<br />YourDailyRundown Developer</p>
     </div>

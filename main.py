@@ -127,11 +127,24 @@ def update_existing_user():
                         'categories': new_categories,
                     }
                 }
+
+                content = []
+                for category in new_categories:
+                    formatted_category = CATEGORY_MAPPING.get(category, category)
+                    content.append(f"<h2>{formatted_category.title()}</h2>")
+                    for article in list(news_collection.find({"category": category})):
+                        content.append(Template(article_template).render({
+                            'image': article["image"],
+                            'url': article["url"],
+                            'title': article["title"],
+                            'content': article["content"],
+                        }))
+
                 users_collection.update_one({'uuid': uuid}, user_update, upsert=True)
                 updated_preferences_email_content = Template(updated_preferences_email_template).render({
                     'first_name': first_name,
                     'last_name': last_name,
-                    'categories': format_categories(new_categories),
+                    'content': ''.join(content),
                     'uuid': uuid
                 })
                 send_email(

@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Error handling &amp; email formatting">
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Categories update email formatting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/email_templates/updated_preferences_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/email_templates/updated_preferences_email.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,14 +160,7 @@
       <workItem from="1693446778728" duration="35936000" />
       <workItem from="1694298307955" duration="32396000" />
       <workItem from="1694625482491" duration="39926000" />
-      <workItem from="1695245755713" duration="37274000" />
-    </task>
-    <task id="LOCAL-00009" summary="Email greeting, SendGrid use">
-      <created>1691032657850</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1691032657850</updated>
+      <workItem from="1695245755713" duration="39628000" />
     </task>
     <task id="LOCAL-00010" summary="Simplify code">
       <created>1691042433814</created>
@@ -507,7 +498,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695529647841</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Categories update email formatting">
+      <created>1695538634704</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1695538634704</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -526,7 +524,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added one more category" />
     <MESSAGE value="Only necessary dependencies, fix typo" />
     <MESSAGE value="Update READMD.md" />
     <MESSAGE value="Email Typos" />
@@ -551,7 +548,8 @@
     <MESSAGE value="Improve email templates" />
     <MESSAGE value="Error handling, solution to inactive sports category support" />
     <MESSAGE value="Error handling &amp; email formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Error handling &amp; email formatting" />
+    <MESSAGE value="Categories update email formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Categories update email formatting" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
@@ -565,7 +563,7 @@
     <SUITE FILE_PATH="coverage/NewsWebScraper$email_subscribers.coverage" NAME="email_subscribers Coverage Results" MODIFIED="1694281748607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$the_athletic_parser.coverage" NAME="the_athletic_parser Coverage Results" MODIFIED="1695425964827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$main.coverage" NAME="main Coverage Results" MODIFIED="1695538255685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/NewsWebScraper$daily_email_distribution.coverage" NAME="daily_email_distribution Coverage Results" MODIFIED="1695488557042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NewsWebScraper$daily_email_distribution.coverage" NAME="daily_email_distribution Coverage Results" MODIFIED="1695574159385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NewsWebScraper$main_test.coverage" NAME="main_test Coverage Results" MODIFIED="1693430872757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -58,7 +58,7 @@ class NewsSummarizer:
         Retrieve top headlines for each category and store them in the categories_dict dictionary.
         """
         for category in self.categories:
-            prev_articles = [document["title"] for document in news_collection.find({"category": "arts"})]
+            prev_articles = [document["title"].lower() for document in news_collection.find({"category": category})]
             news_collection.delete_many({"category": category})
             articles_data = fetch_articles_for_category(category)
             valid_articles_count = 0
@@ -71,7 +71,7 @@ class NewsSummarizer:
                 title = article_data.get("title")
                 url = article_data.get("url")
 
-                if all([summarized_content, image, title, url, title not in prev_articles]):
+                if all([summarized_content, image, title, url, title.lower() not in prev_articles]):
                     valid_articles_count += 1
                     article_info = {
                         "category": category,

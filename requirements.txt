@@ -113,7 +113,7 @@ requests-file==1.5.1
 rich==13.5.3
 rsa==4.9
 s3transfer==0.6.1
-Scrapy==2.9.0
+Scrapy<=2.11.0
 sendgrid==6.10.0
 service-identity==23.1.0
 sgmllib3k==1.0.0

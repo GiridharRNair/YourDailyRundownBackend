@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Optimized fetching articles">
+    <list default="true" id="55a49f00-06cd-489d-a6de-c3f11a3e8978" name="Changes" comment="Update pip dependencies for security">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example.env" beforeDir="false" afterPath="$PROJECT_DIR$/example.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -162,14 +161,7 @@
       <workItem from="1693446778728" duration="35936000" />
       <workItem from="1694298307955" duration="32396000" />
       <workItem from="1694625482491" duration="39926000" />
-      <workItem from="1695245755713" duration="42118000" />
-    </task>
-    <task id="LOCAL-00011" summary="Vercel configuration">
-      <created>1691043009385</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1691043009385</updated>
+      <workItem from="1695245755713" duration="43497000" />
     </task>
     <task id="LOCAL-00012" summary="Api key leak fix">
       <created>1691043279130</created>
@@ -507,7 +499,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695576647928</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Update pip dependencies for security">
+      <created>1695914638514</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1695914638514</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -526,7 +525,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Update READMD.md" />
     <MESSAGE value="Email Typos" />
     <MESSAGE value="Transferred to MongoDB" />
     <MESSAGE value="Dependencies install fix" />
@@ -551,7 +549,8 @@
     <MESSAGE value="Error handling &amp; email formatting" />
     <MESSAGE value="Categories update email formatting" />
     <MESSAGE value="Optimized fetching articles" />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimized fetching articles" />
+    <MESSAGE value="Update pip dependencies for security" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update pip dependencies for security" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

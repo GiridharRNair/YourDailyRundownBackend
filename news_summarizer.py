@@ -59,7 +59,8 @@ class NewsSummarizer:
         """
         for category in self.categories:
             prev_articles = [document["title"].lower() for document in news_collection.find({"category": category})]
-            news_collection.delete_many({"category": category})
+            if len(prev_articles) <= 6:
+                news_collection.delete_many({"category": category})
             articles_data = fetch_articles_for_category(category)
             valid_articles_count = 0
             for article_data in articles_data:

@@ -132,7 +132,7 @@ def update_existing_user():
                 for category in new_categories:
                     formatted_category = CATEGORY_MAPPING.get(category, category)
                     content.append(f"<h2>{formatted_category.title()}</h2>")
-                    for article in list(news_collection.find({"category": category})):
+                    for article in list(news_collection.find({"category": category}))[3:]:
                         content.append(Template(article_template).render({
                             'image': article["image"],
                             'url': article["url"],
@@ -208,7 +208,7 @@ def validate_user(uuid):
                 for category in user['categories']:
                     formatted_category = CATEGORY_MAPPING.get(category, category)
                     content.append(f"<h2>{formatted_category.title()}</h2>")
-                    for article in list(news_collection.find({"category": category})):
+                    for article in list(news_collection.find({"category": category}))[3:]:
                         content.append(Template(article_template).render({
                             'image': article["image"],
                             'url': article["url"],

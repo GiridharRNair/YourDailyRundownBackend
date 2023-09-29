@@ -15,6 +15,7 @@ API_REQUEST_INTERVAL = 10
 
 palm.configure(api_key=os.getenv('AI_API_KEY'))
 nyt_api_key = os.getenv('NYT_API_KEY')
+proxy_key = os.getenv('PROXY_API_KEY')
 
 client = MongoClient(os.environ.get('MONGO_URI'))
 news_collection = client.users["news"]
@@ -59,7 +60,7 @@ class NewsSummarizer:
         """
         for category in self.categories:
             prev_articles = [document["title"].lower() for document in news_collection.find({"category": category})]
-            if len(prev_articles) <= 6:
+            if len(prev_articles) >= 6:
                 news_collection.delete_many({"category": category})
             articles_data = fetch_articles_for_category(category)
             valid_articles_count = 0
@@ -111,7 +112,7 @@ def scrape_content(article_url, category):
     """
     for attempt in range(RETRY_ATTEMPTS):
         try:
-            article = NewsPlease.from_url(article_url)
+            article = NewsPlease.from_url(f'http://api.proxiesapi.com/?auth_key={proxy_key}&url={article_url}')
             summarized_content = summarize_article(article.maintext, category)
             return summarized_content
         except Exception as e:

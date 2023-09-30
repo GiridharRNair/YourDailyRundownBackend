@@ -4,7 +4,7 @@ Welcome to the YourDailyRundown Backend repository! This backend serves as the c
 
 ## Overview
 
-YourDailyRundown streamlines news consumption by gathering articles from various categories through sources such as the New York Times API and The Athletic RSS feed, along with content scraping via [News-Please](https://github.com/fhamborg/news-please). We then provide succinct email summaries, powered by Google's PaLM 2 AI model, and ensure efficient email distribution through Twilio SendGrid. Behind the scenes, our backend handles user registration, verification, updates, and unsubscribing for a seamless user experience.
+YourDailyRundown streamlines news consumption by gathering articles from various categories through sources such as the New York Times API and The Athletic RSS feed, along with content scraping via [News-Please](https://github.com/fhamborg/news-please) & [Newspaper](https://github.com/codelucas/newspaper). We then provide succinct email summaries, powered by Google's PaLM 2 AI model, and ensure efficient email distribution through Twilio SendGrid. Behind the scenes, our backend handles user registration, verification, updates, and unsubscribing for a seamless user experience.
 
 Live Demo: https://your-daily-rundown.vercel.app/ </br>
 Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown
@@ -28,7 +28,7 @@ Frontend Repo: https://github.com/GiridharRNair/YourDailyRundown
 - `/unsubscribe`: Unsubscribes users from email notifications and provides feedback to the developer. It confirms the unsubscription via email.
 
 ### `news_summarizer.py`
-The `news_summarizer.py` module serves the purpose of summarizing news articles from various categories. It utilizes multiple APIs and external libraries, including the New York Times API, Google's PaLM AI model for text summarization, the `NewsPlease` library for article content extraction, and a custom parser (`TheAthleticParser`) for sports articles. This script summarizes a specified number of articles per category, employing a retry mechanism for resilience against API request errors. It also stores the summarized articles in a MongoDB database, categorized by news category. The module is designed to facilitate automated news aggregation and summarization tasks efficiently.
+The `news_summarizer.py` module serves the purpose of summarizing news articles from various categories. It utilizes multiple APIs and external libraries, including the New York Times API, Google's PaLM AI model for text summarization, the `NewsPlease` and `Newspaper` library for article content extraction, and a custom parser (`TheAthleticParser`) for sports articles. This script summarizes a specified number of articles per category, employing a retry mechanism for resilience against API request errors. It also stores the summarized articles in a MongoDB database, categorized by news category. The module is designed to facilitate automated news aggregation and summarization tasks efficiently.
 
 ### `daily_email_distribution.py`
 This Python module is responsible for daily email distribution to subscribers, summarizing news articles across categories. It utilizes the SendGrid API for email delivery, interacts with MongoDB to manage user data, and employs the News Summarizer module for article summarization. Key dependencies include `os`, `jinja2`, `pymongo`, and `dotenv`. The module deletes invalidated users from the database and sends personalized emails containing summarized news articles to validated subscribers.
@@ -62,22 +62,26 @@ To run the YourDailyRundown Backend, you'll need to set the following environmen
 
 To run this Python project, follow these steps:
 
-1. **Clone the Repository:**
+1.**Clone the Repository:**
    ```
    git clone https://github.com/GiridharRNair/YourDailyRundownBackend.git
-   cd YourDailyRundownBackend/
    ```
 
-2. **Install Dependencies:**
+2.**Change Directory**
+   ```
+   cd YourDailyRundownBackend
+   ```
+
+3.**Install Dependencies:**
    Use pip to install the required dependencies.
    ```
    pip install -r requirements.txt
    ```
 
-3. **Environment Variables:**
+4.**Environment Variables:**
    Rename `example.env` to `.env`, and fill in the necessary values for environment variables.
 
-4. **Run the Project:**
+5.**Run the Project:**
    Execute the main Python script to start the project.
    ```
    python main.py

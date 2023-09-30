@@ -1,6 +1,8 @@
 import os
 import time
 import requests
+from newspaper import Config
+from newspaper import Article
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from newsplease import NewsPlease
@@ -19,6 +21,12 @@ proxy_key = os.getenv('PROXY_API_KEY')
 
 client = MongoClient(os.environ.get('MONGO_URI'))
 news_collection = client.users["news"]
+
+user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 \
+Safari/537.36'
+
+config = Config()
+config.browser_user_agent = user_agent
 
 DEFAULTS = {
     'model': 'models/text-bison-001',
@@ -112,11 +120,23 @@ def scrape_content(article_url, category):
     """
     for attempt in range(RETRY_ATTEMPTS):
         try:
-            article = NewsPlease.from_url(f'http://api.proxiesapi.com/?auth_key={proxy_key}&url={article_url}')
-            summarized_content = summarize_article(article.maintext, category)
-            return summarized_content
+            page = Article(article_url)
+            page.download()
+            page.parse()
+            if page.text:
+                summarized_content = summarize_article(page.text, category)
+                return summarized_content
         except Exception as e:
-            print(f"Error scraping article in {category}: {str(e)} {attempt + 1} / {RETRY_ATTEMPTS}")
+            print(f"Error scraping article in {category} with newspaper: {str(e)} {attempt + 1} / {RETRY_ATTEMPTS}")
+
+        try:
+            article = NewsPlease.from_url(article_url)
+            if article.maintext:
+                summarized_content = summarize_article(article.maintext, category)
+                return summarized_content
+        except Exception as e:
+            print(f"Error scraping article in {category} with news-please: {str(e)} {attempt + 1} / {RETRY_ATTEMPTS}")
+
     return None
 
 

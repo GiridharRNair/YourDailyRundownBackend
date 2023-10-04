@@ -83,7 +83,7 @@ openai==0.27.8
 ordered-set==4.1.0
 packaging==23.1
 parsel==1.8.1
-Pillow==10.0.0
+Pillow>=10.0.1
 pipreqs==0.4.13
 plac==1.3.5
 Protego==0.2.1
@@ -129,7 +129,7 @@ tqdm==4.65.0
 Twisted==22.10.0
 typing_extensions==4.7.1
 tzlocal==5.0.1
-urllib3==1.26.16
+urllib3>=1.26.17
 vertexai==0.0.1
 w3lib==2.1.2
 warcio==1.7.4

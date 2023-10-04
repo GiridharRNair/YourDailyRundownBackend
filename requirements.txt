@@ -1,4 +1,5 @@
 ago==0.0.95
+aiodns==3.0.0
 aiohttp==3.8.5
 aiosignal==1.3.1
 APScheduler==3.10.1
@@ -20,8 +21,9 @@ click==8.1.6
 colorama==0.4.6
 constantly==15.1.0
 cors==1.0.1
-cryptography>=41.0.4
+cryptography==41.0.4
 cssselect==1.2.0
+Cython==3.0.2
 Deprecated==1.2.14
 dnspython==2.4.2
 docopt==0.6.2
@@ -49,7 +51,7 @@ google-crc32c==1.5.0
 google-generativeai==0.1.0
 google-resumable-media==2.5.0
 googleapis-common-protos==1.60.0
-greenlet>=3.0
+greenlet==3.0.0
 grpc-google-iam-v1==0.12.6
 grpcio==1.56.2
 grpcio-status==1.56.2
@@ -83,7 +85,7 @@ openai==0.27.8
 ordered-set==4.1.0
 packaging==23.1
 parsel==1.8.1
-Pillow>=10.0.1
+Pillow==10.0.1
 pipreqs==0.4.13
 plac==1.3.5
 Protego==0.2.1
@@ -93,6 +95,7 @@ psycopg2-binary==2.9.6
 py3-validate-email @ git+https://gitea.ksol.io/karolyi/py3-validate-email@32c8f4cdfaba4c7e7fc81405a023c849a9268859
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
+pycares==4.3.0
 pycparser==2.21
 PyDispatcher==2.0.7
 Pygments==2.16.1
@@ -113,7 +116,7 @@ requests-file==1.5.1
 rich==13.5.3
 rsa==4.9
 s3transfer==0.6.1
-Scrapy<=2.11.0
+Scrapy==2.11.0
 sendgrid==6.10.0
 service-identity==23.1.0
 sgmllib3k==1.0.0
@@ -129,7 +132,7 @@ tqdm==4.65.0
 Twisted==22.10.0
 typing_extensions==4.7.1
 tzlocal==5.0.1
-urllib3>=1.26.17
+urllib3==1.26.17
 vertexai==0.0.1
 w3lib==2.1.2
 warcio==1.7.4
